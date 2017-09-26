@@ -10,7 +10,7 @@
 	Cuando las bolas adquieren un determinado tamaño, dejan de dividirse y desaparecen.
 	El objetivo principal del juego es acabar con las bolas sin que estas toquen a los personajes.
 	Si una bola toca un personaje, este perderá una vida.
-	Nuestra idea es implementar el juego como un multijugador con puntuaciones, vidas, potenciadores y modificadores de armas
+	Nuestra idea es implementar el juego como un multijugador con puntuaciones, vidas, potenciadores y modificadores de armas.
 
 	Video referencia: https://www.youtube.com/watch?v=rlsx9yrr2-w
 
