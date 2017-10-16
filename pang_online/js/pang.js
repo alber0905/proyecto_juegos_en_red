@@ -1,5 +1,5 @@
 $(document).ready(function(){
-            var game = new Phaser.Game(1200, 680, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
+            var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
             var platforms;
             var player;
             function preload(){
@@ -21,18 +21,7 @@ $(document).ready(function(){
 
                 ground.body.immovable = true;
 
-                var ledge = platforms.create(game.world.width - 400, 400, 'ground');
                 
-                ledge.body.immovable = true;
-
-                ledge = platforms.create(-150, 250, 'ground');
-
-                ledge.body.immovable = true;
-
-                ledge = platforms.create(game.world.width/2 - 200, 350, 'ground');
-                ledge.scale.setTo(0.5, 1);
-                ledge.body.immovable = true;
-
                 //PLAYER
 
                 player = game.add.sprite(32, game.world.height-150, 'dude');
@@ -49,24 +38,13 @@ $(document).ready(function(){
 
                 cursors = game.input.keyboard.createCursorKeys();
 
-                stars = game.add.group();
-
-                stars.enableBody = true;
                 
-                for(var i = 0; i<12; i++){
-                    var star = stars.create(i*100, 0, 'star');
-
-                    star.body.gravity.y = 50;
-                    star.body.bounce.y= 0.7 + Math.random()*0.2;
-                }
                 
             }
 
             function update(){
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
 
-                game.physics.arcade.collide(stars, platforms);
-                game.physics.arcade.overlap(player, stars, collectStar, null, this);
 
                 player.body.velocity.x = 0;
                 if(cursors.left.isDown){
