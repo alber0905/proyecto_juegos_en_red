@@ -11,6 +11,9 @@ $(document).ready(function(){
             game.load.image('bullet', 'assets/laser_bullet.png');
             }
 
+            var scake = 1;
+            var gravity = 600;
+
             function create(){
                 game.physics.startSystem(Phaser.Physics.ARCADE);
                 sky = game.add.sprite(0, 0, 'sky');
@@ -55,7 +58,41 @@ $(document).ready(function(){
                 //MOVIMIENTO
 
                 cursors = game.input.keyboard.createCursorKeys();    
-                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);           
+                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+
+                //BOLAS
+                
+                balls = game.add.group();
+                ball = game.add.sprite(400, 200, 'ball');
+
+                knocker = game.add.sprite(400, 200, 'dude');
+
+                game.physics.enable([knocker, ball], Phaser.Physics.ARCADE);
+
+                knocker.body.immovable = true;
+
+                //  This gets it moving
+                //ball.body.velocity.setTo(200, 200);
+
+                //  This makes the game world bounce-able
+                ball.body.collideWorldBounds = true;
+
+                //  This sets the image bounce energy for the horizontal 
+                //  and vertical vectors (as an x,y point). "1" is 100% energy return
+                ball.body.bounce.setTo(1, 1);
+                //balls.createMultiple(250, 'bullets', 0, false);
+                //knocker = game.add.sprite(200, game.world.height, 'dude');
+
+                ball.scale.setTo(scake, scake);
+                ball.body.collideWorldBounds = true;
+                knocker.body.collideWorldBounds = true;
+                //ball.body.collide('platforms');
+                knocker.scale.setTo(0.6, 0.6);
+                ball.body.bounce.setTo(1, 1);
+                ball.body.velocity.setTo(100, 100);
+                ball.body.gravity.setTo(0, gravity);
+                knocker.body.gravity.setTo(0, gravity / 50);
+                knocker.reset(200, game.world.height - 120);
                 
             }
 
