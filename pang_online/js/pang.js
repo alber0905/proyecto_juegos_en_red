@@ -57,7 +57,11 @@ $(document).ready(function(){
 
                 //MOVIMIENTO
 
-                cursors = game.input.keyboard.createCursorKeys();    
+                cursors = game.input.keyboard.createCursorKeys();   
+                
+                
+                spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+                spacebar.onDown.add(fireBullet, this);
                 game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
                 //BOLAS
@@ -119,15 +123,9 @@ $(document).ready(function(){
                 else{
                     player.animations.stop();
                     player.frame = 4;
-                }                
+                } 
 
-                if(cursors.up.isDown && player.body.touching.down && hitPlatform){
-                    player.body.velocity.y = -450;
-                }
-
-                if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-                    fireBullet();
-                }
+                
             }
 
             function collectStar(player, star){
@@ -135,14 +133,11 @@ $(document).ready(function(){
             }
 
             function fireBullet(){
-                if(game.time.now > bulletTime){
                     bullet = bullets.getFirstExists(false);
                     if(bullet){
                         bullet.reset(player.x, player.y);
                         bullet.body.velocity.y = -300;
                     }
-                    bulletTime = game.time.now + 250;
-                }
             }
     
             function resetBullet(bullet){
