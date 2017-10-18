@@ -1,12 +1,14 @@
 $(document).ready(function(){
-            var game = new Phaser.Game(1200, 680, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
+            var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
             var platforms;
             var player;
+            var bulletTime = 0;
             function preload(){
             game.load.image('sky', 'assets/sky.png');
             game.load.image('ground', 'assets/platform.png');
             game.load.image('star', 'assets/star.png');
             game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+            game.load.image('bullet', 'assets/laser_bullet.png');
             }
 
             function create(){
@@ -21,18 +23,23 @@ $(document).ready(function(){
 
                 ground.body.immovable = true;
 
-                var ledge = platforms.create(game.world.width - 400, 400, 'ground');
+                //BALAS
+
+                bullets = game.add.group();
+                bullets.enableBody = true;
+                bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+                for (var i = 0; i<20; i++){
+                    var b = bullets.create(0,0, 'bullet');
+                    b.name = 'bullet'+i;
+                    b.exists = false;
+                    b.visible = false;
+                    b.checkWorldBounds = true;
+                    b.events.onOutOfBounds.add(resetBullet, this);
+                    b.scale.setTo(0.04, 0.04);
+                }
+
                 
-                ledge.body.immovable = true;
-
-                ledge = platforms.create(-150, 250, 'ground');
-
-                ledge.body.immovable = true;
-
-                ledge = platforms.create(game.world.width/2 - 200, 350, 'ground');
-                ledge.scale.setTo(0.5, 1);
-                ledge.body.immovable = true;
-
                 //PLAYER
 
                 player = game.add.sprite(32, game.world.height-150, 'dude');
@@ -47,26 +54,14 @@ $(document).ready(function(){
 
                 //MOVIMIENTO
 
-                cursors = game.input.keyboard.createCursorKeys();
-
-                stars = game.add.group();
-
-                stars.enableBody = true;
-                
-                for(var i = 0; i<12; i++){
-                    var star = stars.create(i*100, 0, 'star');
-
-                    star.body.gravity.y = 50;
-                    star.body.bounce.y= 0.7 + Math.random()*0.2;
-                }
+                cursors = game.input.keyboard.createCursorKeys();    
+                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);           
                 
             }
 
             function update(){
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
 
-                game.physics.arcade.collide(stars, platforms);
-                game.physics.arcade.overlap(player, stars, collectStar, null, this);
 
                 player.body.velocity.x = 0;
                 if(cursors.left.isDown){
@@ -92,10 +87,31 @@ $(document).ready(function(){
                 if(cursors.up.isDown && player.body.touching.down && hitPlatform){
                     player.body.velocity.y = -450;
                 }
+
+                if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+                    fireBullet();
+                }
             }
 
             function collectStar(player, star){
                 star.kill();
             }
 
+            function fireBullet(){
+                if(game.time.now > bulletTime){
+                    bullet = bullets.getFirstExists(false);
+                    if(bullet){
+                        bullet.reset(player.x, player.y);
+                        bullet.body.velocity.y = -300;
+                    }
+                    bulletTime = game.time.now + 250;
+                }
+            }
+    
+            function resetBullet(bullet){
+                bullet.kill();
+            }
+
         });
+
+       
