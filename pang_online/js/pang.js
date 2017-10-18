@@ -2,11 +2,13 @@ $(document).ready(function(){
             var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
             var platforms;
             var player;
+            var bulletTime = 0;
             function preload(){
             game.load.image('sky', 'assets/sky.png');
             game.load.image('ground', 'assets/platform.png');
             game.load.image('star', 'assets/star.png');
             game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+            game.load.image('bullet', 'assets/laser_bullet.png');
             }
 
             function create(){
@@ -20,6 +22,22 @@ $(document).ready(function(){
                 ground.scale.setTo(4, 2);
 
                 ground.body.immovable = true;
+
+                //BALAS
+
+                bullets = game.add.group();
+                bullets.enableBody = true;
+                bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+                for (var i = 0; i<20; i++){
+                    var b = bullets.create(0,0, 'bullet');
+                    b.name = 'bullet'+i;
+                    b.exists = false;
+                    b.visible = false;
+                    b.checkWorldBounds = true;
+                    b.events.onOutOfBounds.add(resetBullet, this);
+                    b.scale.setTo(0.04, 0.04);
+                }
 
                 
                 //PLAYER
@@ -36,9 +54,8 @@ $(document).ready(function(){
 
                 //MOVIMIENTO
 
-                cursors = game.input.keyboard.createCursorKeys();
-
-                
+                cursors = game.input.keyboard.createCursorKeys();    
+                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);           
                 
             }
 
@@ -70,10 +87,31 @@ $(document).ready(function(){
                 if(cursors.up.isDown && player.body.touching.down && hitPlatform){
                     player.body.velocity.y = -450;
                 }
+
+                if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+                    fireBullet();
+                }
             }
 
             function collectStar(player, star){
                 star.kill();
             }
 
+            function fireBullet(){
+                if(game.time.now > bulletTime){
+                    bullet = bullets.getFirstExists(false);
+                    if(bullet){
+                        bullet.reset(player.x, player.y);
+                        bullet.body.velocity.y = -300;
+                    }
+                    bulletTime = game.time.now + 250;
+                }
+            }
+    
+            function resetBullet(bullet){
+                bullet.kill();
+            }
+
         });
+
+       
