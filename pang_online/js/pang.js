@@ -11,6 +11,7 @@ $(document).ready(function(){
             game.load.spritesheet('dude', 'assets/player_rightmove.png', 32, 32);
             game.load.image('bullet', 'assets/laser_bullet.png');
             game.load.image('long_bullet', 'assets/long_bullet.png');
+            game.load.image('ball', 'assets/big_red_ball.png');
             }
 
             var scake = 1;
@@ -92,7 +93,6 @@ $(document).ready(function(){
                 //  and vertical vectors (as an x,y point). "1" is 100% energy return
                 ball.body.bounce.setTo(1, 1);
                 //balls.createMultiple(250, 'bullets', 0, false);
-                //knocker = game.add.sprite(200, game.world.height, 'dude');
 
                 ball.scale.setTo(scake, scake);
                 ball.body.collideWorldBounds = true;
@@ -106,6 +106,7 @@ $(document).ready(function(){
 
             function update(){
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
+                game.physics.arcade.collide(ball, platforms);
 
 
                 player.body.velocity.x = 0;
