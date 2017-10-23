@@ -109,6 +109,8 @@ $(document).ready(function(){
                 if (ball.size > 1){
                     var newball1 = balls.create(ball.position.x-5,ball.position.y, 'ball'+(size-1));
                     var newball2 = balls.create(ball.position.x+5,ball.position.y, 'ball'+(size-1));
+                    game.physics.enable(newball1, Phaser.Physics.ARCADE);
+                    game.physics.enable(newball2, Phaser.Physics.ARCADE);
                     newball1.body.collideWorldBounds = true;
                     newball1.body.bounce.setTo(1, 1);
                     newball1.scale.setTo(scake, scake);
@@ -178,6 +180,7 @@ $(document).ready(function(){
             }
 
             function collisionBall(){
+                dividirBolas(ball);
                 ball.kill();
             }
 
