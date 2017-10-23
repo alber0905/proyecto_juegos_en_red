@@ -7,10 +7,8 @@ $(document).ready(function(){
             game.load.image('sky', 'assets/sky.png');
             game.load.image('ground', 'assets/platform.png');
             game.load.image('star', 'assets/star.png');
-            game.load.spritesheet('dude', 'assets/player.png', 32, 32);
-            game.load.spritesheet('dude', 'assets/player_rightmove.png', 32, 32);
+            game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
             game.load.image('bullet', 'assets/laser_bullet.png');
-            game.load.image('long_bullet', 'assets/long_bullet.png');
             }
 
             var scake = 1;
@@ -44,9 +42,6 @@ $(document).ready(function(){
                     b.scale.setTo(0.04, 0.04);
                 }
 
-                long_bullet = game.add.group();
-
-
                 
                 //PLAYER
 
@@ -57,24 +52,13 @@ $(document).ready(function(){
                 player.body.gravity.y = 300;
                 player.body.collideWorldBounds = true;
 
-                player.animations.add('moveleft', [0, 1, 2, 3], 10, true);
-                player.animations.add('moveright', [13, 14, 15, 16], 10, true);
-
-                long_bullet_instance = long_bullet.create(player.x, player.y, 'long_bullet', 1);
-                long_bullet_instance.exists = false;
-                long_bullet_instance.visible = false;
+                player.animations.add('left', [0, 1, 2, 3], 10, true);
+                player.animations.add('right', [5, 6,7, 8], 10, true);
 
                 //MOVIMIENTO
 
-                cursors = game.input.keyboard.createCursorKeys();   
-                
-                
-                spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 <<<<<<< HEAD
-                spacebar.onDown.add(fireLongBullet, this);
-                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);           
-=======
-                spacebar.onDown.add(fireBullet, this);
+                cursors = game.input.keyboard.createCursorKeys();    
                 game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
                 //BOLAS
@@ -110,7 +94,14 @@ $(document).ready(function(){
                 ball.body.gravity.setTo(0, gravity);
                 knocker.body.gravity.setTo(0, gravity / 50);
                 knocker.reset(200, game.world.height - 120);
->>>>>>> 496a69c03bcf228a0a67e6baea72f093659ec9b6
+=======
+                cursors = game.input.keyboard.createCursorKeys();   
+                
+                
+                spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+                spacebar.onDown.add(fireBullet, this);
+                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);           
+>>>>>>> 1ad31f1c864e47dae325dfb09e6edd511ff150b7
                 
             }
 
@@ -121,14 +112,14 @@ $(document).ready(function(){
                 player.body.velocity.x = 0;
                 if(cursors.left.isDown){
                     player.body.velocity.x = -150;
-                    player.animations.play('moveleft');
+                    player.animations.play('left');
                     if(player.position.x == 0 ){
                         player.position.x = game.world.width;
                     }
                 }
                 else if(cursors.right.isDown){
                     player.body.velocity.x = 150;
-                    player.animations.play('moveright');
+                    player.animations.play('right');
                     if(player.position.x >= game.world.width-40){
                         player.position.x = 0;
                     }   
@@ -152,6 +143,15 @@ $(document).ready(function(){
                         bullet.reset(player.x, player.y);
                         bullet.body.velocity.y = -300;
                     }
+            }
+    
+            function resetBullet(bullet){
+                bullet.kill();
+            }
+
+        });
+
+       
             }
     
             function resetBullet(bullet){
