@@ -7,10 +7,14 @@ $(document).ready(function(){
             game.load.image('sky', 'assets/sky.png');
             game.load.image('ground', 'assets/platform.png');
             game.load.image('star', 'assets/star.png');
-            game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+            game.load.spritesheet('dude', 'assets/player.png', 32, 32);
+            game.load.spritesheet('dude', 'assets/player_rightmove.png', 32, 32);
             game.load.image('bullet', 'assets/laser_bullet.png');
             game.load.image('long_bullet', 'assets/long_bullet.png');
             }
+
+            var scake = 1;
+            var gravity = 600;
 
             function create(){
                 game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -53,8 +57,8 @@ $(document).ready(function(){
                 player.body.gravity.y = 300;
                 player.body.collideWorldBounds = true;
 
-                player.animations.add('left', [0, 1, 2, 3], 10, true);
-                player.animations.add('right', [5, 6,7, 8], 10, true);
+                player.animations.add('moveleft', [0, 1, 2, 3], 10, true);
+                player.animations.add('moveright', [13, 14, 15, 16], 10, true);
 
                 long_bullet_instance = long_bullet.create(player.x, player.y, 'long_bullet', 1);
                 long_bullet_instance.exists = false;
@@ -66,8 +70,42 @@ $(document).ready(function(){
                 
                 
                 spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-                spacebar.onDown.add(fireLongBullet, this);
-                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);           
+                spacebar.onDown.add(fireBullet, this);
+                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+
+                //BOLAS
+                
+                balls = game.add.group();
+                ball = game.add.sprite(400, 200, 'ball');
+
+                knocker = game.add.sprite(400, 200, 'dude');
+
+                game.physics.enable([knocker, ball], Phaser.Physics.ARCADE);
+
+                knocker.body.immovable = true;
+
+                //  This gets it moving
+                //ball.body.velocity.setTo(200, 200);
+
+                //  This makes the game world bounce-able
+                ball.body.collideWorldBounds = true;
+
+                //  This sets the image bounce energy for the horizontal 
+                //  and vertical vectors (as an x,y point). "1" is 100% energy return
+                ball.body.bounce.setTo(1, 1);
+                //balls.createMultiple(250, 'bullets', 0, false);
+                //knocker = game.add.sprite(200, game.world.height, 'dude');
+
+                ball.scale.setTo(scake, scake);
+                ball.body.collideWorldBounds = true;
+                knocker.body.collideWorldBounds = true;
+                //ball.body.collide('platforms');
+                knocker.scale.setTo(0.6, 0.6);
+                ball.body.bounce.setTo(1, 1);
+                ball.body.velocity.setTo(100, 100);
+                ball.body.gravity.setTo(0, gravity);
+                knocker.body.gravity.setTo(0, gravity / 50);
+                knocker.reset(200, game.world.height - 120);
                 
             }
 
@@ -78,14 +116,14 @@ $(document).ready(function(){
                 player.body.velocity.x = 0;
                 if(cursors.left.isDown){
                     player.body.velocity.x = -150;
-                    player.animations.play('left');
+                    player.animations.play('moveleft');
                     if(player.position.x == 0 ){
                         player.position.x = game.world.width;
                     }
                 }
                 else if(cursors.right.isDown){
                     player.body.velocity.x = 150;
-                    player.animations.play('right');
+                    player.animations.play('moveright');
                     if(player.position.x >= game.world.width-40){
                         player.position.x = 0;
                     }   
