@@ -3,7 +3,7 @@ $(document).ready(function(){
             var platforms;
             var player;
             var long_bullet_instance;
-            var bulletTime = 0;
+            var firing = false;
             function preload(){
             game.load.image('sky', 'assets/sky.png');
             game.load.image('ground', 'assets/platform.png');
@@ -12,13 +12,17 @@ $(document).ready(function(){
             game.load.image('bullet', 'assets/laser_bullet.png');
             game.load.image('long_bullet', 'assets/superlong_bullet.png');
             game.load.image('ball', 'assets/big_red_ball.png');
+            game.load.image('ball3', 'assets/medium_red_ball.png');
+            game.load.image('ball2', 'assets/small_red_ball.png');
+            game.load.image('ball1', 'assets/small_small_red_ball.png');
             game.load.image('western', 'assets/western.png');
             game.load.image('starvader', 'assets/starvader.png');
             game.load.image('cinema', 'assets/cinema.jpg');
             }
 
-            var scake = 1;
+            var scake = 3;
             var gravity = 600;
+
 
             function create(){
                 game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -110,10 +114,10 @@ $(document).ready(function(){
                 
             }
 
-            function dividirBolas(ball, size){
+            function dividirBolas(ball){
                 if (ball.size > 1){
-                    var newball1 = balls.create(ball.position.x-5,ball.position.y, 'ball'+(size-1));
-                    var newball2 = balls.create(ball.position.x+5,ball.position.y, 'ball'+(size-1));
+                    var newball1 = balls.create(ball.position.x-5,ball.position.y, 'ball'+(ball.size-1));
+                    var newball2 = balls.create(ball.position.x+5,ball.position.y, 'ball'+(ball.size-1));
                     game.physics.enable(newball1, Phaser.Physics.ARCADE);
                     game.physics.enable(newball2, Phaser.Physics.ARCADE);
                     newball1.body.collideWorldBounds = true;
@@ -135,9 +139,9 @@ $(document).ready(function(){
 
             function update(){
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
-                game.physics.arcade.collide(ball, platforms);
-                game.physics.arcade.collide(bullets, platforms);
-                game.physics.arcade.overlap(ball, bullets, collisionBall);
+                game.physics.arcade.collide(balls, platforms);
+                game.physics.arcade.collide(bullets, platforms, killLongBullet, null, this);
+                game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
 
                     
                 player.body.velocity.x = 0;
@@ -168,9 +172,6 @@ $(document).ready(function(){
                 
             }
 
-            function collectStar(player, star){
-                star.kill();
-            }
 
             function fireBullet(){
                     bullet = bullets.getFirstExists(false);
@@ -185,16 +186,25 @@ $(document).ready(function(){
             }
 
             function fireLongBullet(){
-                long_bullet_instance.reset(player.x, player.y);
-                long_bullet_instance.body.velocity.y = -200;
+                if(!firing){
+                    firing = true;
+                    long_bullet_instance.reset(player.x, player.y);
+                    long_bullet_instance.body.velocity.y = -200;
+                }
             }
 
-            function stopLongBullet(long_bullet){
-               long_bullet.kill();
+            function collisionBall(ball1, bullet){
+                bullet.kill();
+                firing = false;
+                dividirBolas(ball1);
+                ball1.kill();
             }
-            function collisionBall(){
-                dividirBolas(ball);
-                ball.kill();
+
+            function killLongBullet(bullet, platform){
+                if(platform.y<10){
+                    bullet.kill();
+                    firing = false;
+                }
             }
 
         });
