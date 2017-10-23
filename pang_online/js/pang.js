@@ -2,19 +2,16 @@ $(document).ready(function(){
             var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
             var platforms;
             var player;
-            var long_bullet_instance;
             var bulletTime = 0;
+            var score = 0;
             function preload(){
             game.load.image('sky', 'assets/sky.png');
             game.load.image('ground', 'assets/platform.png');
             game.load.image('star', 'assets/star.png');
             game.load.spritesheet('dude', 'assets/player.png', 32, 34);
             game.load.image('bullet', 'assets/laser_bullet.png');
-            game.load.image('long_bullet', 'assets/superlong_bullet.png');
+            game.load.image('long_bullet', 'assets/long_bullet.png');
             game.load.image('ball', 'assets/big_red_ball.png');
-            game.load.image('western', 'assets/western.png');
-            game.load.image('starvader', 'assets/starvader.png');
-            game.load.image('cinema', 'assets/cinema.jpg');
             }
 
             var scake = 1;
@@ -22,19 +19,16 @@ $(document).ready(function(){
 
             function create(){
                 game.physics.startSystem(Phaser.Physics.ARCADE);
-                sky = game.add.sprite(0, 0, 'western');
-                sky.scale.setTo(0.5, 0.5);
+                sky = game.add.sprite(0, 0, 'sky');
+                sky.scale.setTo(2, 2);
                 bullets = game.add.group();
                 platforms = game.add.group();
                 platforms.enableBody = true;
 
-                var ground = platforms.create(0, game.world.height - 64, 'ground');
-                var ceil = platforms.create(0, 0, 'ground');
+                var ground = platforms.create(0, game.world.height - 64, 'ground', 3);
                 ground.scale.setTo(4, 2);
-                ceil.scale.setTo(4,2);
 
                 ground.body.immovable = true;
-                ceil.body.immovable = true;
 
                 //BALAS
 
@@ -67,9 +61,6 @@ $(document).ready(function(){
                 long_bullet_instance = bullets.create(player.x, player.y, 'long_bullet');
                 long_bullet_instance.exists = false;
                 long_bullet_instance.visible = false;
-                long_bullet_instance.collideWorldBounds = true;
-                long_bullet_instance.body.bounce.setTo(0, 0);
-
                 game.world.sendToBack(long_bullet_instance);
                
                 
@@ -79,14 +70,14 @@ $(document).ready(function(){
                 cursors = game.input.keyboard.createCursorKeys();   
                 
                 spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-                spacebar.onDown.add(fireLongBullet, this);
+                spacebar.onDown.add(fireBullet, this);
                 game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
                 //BOLAS
                 
                 balls = game.add.group();
-                ball =balls.create(400, 200, 'ball');
-                ball.size = 1;
+                //ball = game.add.sprite(400, 200, 'ball');
+                ball = balls.create(400,200, 'ball');
                 game.physics.enable(balls, Phaser.Physics.ARCADE);
 
 
@@ -103,10 +94,15 @@ $(document).ready(function(){
 
                 ball.scale.setTo(scake, scake);
                 //ball.body.collideWorldBounds = true;
+                player.body.collideWorldBounds = true;
+                //ball.body.collide('platforms');
                 ball.body.bounce.setTo(1, 1);
                 ball.body.velocity.setTo(100, 100);
                 ball.body.gravity.setTo(0, gravity);
                 ball.size = 4;
+
+                //Score
+                scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
                 
             }
 
@@ -114,8 +110,6 @@ $(document).ready(function(){
                 if (ball.size > 1){
                     var newball1 = balls.create(ball.position.x-5,ball.position.y, 'ball'+(size-1));
                     var newball2 = balls.create(ball.position.x+5,ball.position.y, 'ball'+(size-1));
-                    game.physics.enable(newball1, Phaser.Physics.ARCADE);
-                    game.physics.enable(newball2, Phaser.Physics.ARCADE);
                     newball1.body.collideWorldBounds = true;
                     newball1.body.bounce.setTo(1, 1);
                     newball1.scale.setTo(scake, scake);
@@ -131,12 +125,13 @@ $(document).ready(function(){
                     newball1.size = ball.size -1;
                     newball2.size = ball.size -1;
                 }
+                score += 10;
+                scoreText.text = 'Score: ' + score;
             }
 
             function update(){
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
                 game.physics.arcade.collide(ball, platforms);
-                game.physics.arcade.collide(bullets, platforms);
                 game.physics.arcade.overlap(ball, bullets, collisionBall);
 
                     
@@ -160,10 +155,6 @@ $(document).ready(function(){
                     player.animations.stop();
                     player.frame = 4;
                 } 
-
-                if(long_bullet_instance.position.y > game.world.height){
-                    stopLongBullet(long_bullet_instance);
-                }
 
                 
             }
@@ -189,11 +180,7 @@ $(document).ready(function(){
                 long_bullet_instance.body.velocity.y = -200;
             }
 
-            function stopLongBullet(long_bullet){
-               long_bullet.kill();
-            }
             function collisionBall(){
-                dividirBolas(ball);
                 ball.kill();
             }
 
