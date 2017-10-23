@@ -10,7 +10,7 @@ $(document).ready(function(){
             game.load.image('star', 'assets/star.png');
             game.load.spritesheet('dude', 'assets/player.png', 32, 34);
             game.load.image('bullet', 'assets/laser_bullet.png');
-            game.load.image('long_bullet', 'assets/long_bullet.png');
+            game.load.image('long_bullet', 'assets/superlong_bullet.png');
             game.load.image('ball', 'assets/big_red_ball.png');
             game.load.image('ball3', 'assets/medium_red_ball.png');
             game.load.image('ball2', 'assets/small_red_ball.png');
@@ -30,9 +30,12 @@ $(document).ready(function(){
                 platforms.enableBody = true;
 
                 var ground = platforms.create(0, game.world.height - 64, 'ground', 3);
+                var ceil = platforms.create(0, 0, 'ground');
                 ground.scale.setTo(4, 2);
-
+                ceil.scale.setTo(4,2);
+ 
                 ground.body.immovable = true;
+                ceil.body.immovable = true;
 
                 //BALAS
 
@@ -74,7 +77,7 @@ $(document).ready(function(){
                 cursors = game.input.keyboard.createCursorKeys();   
                 
                 spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-                spacebar.onDown.add(fireBullet, this);
+                spacebar.onDown.add(fireLongBullet, this);
                 game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
                 //BOLAS
@@ -114,6 +117,8 @@ $(document).ready(function(){
                 if (ball.size > 1){
                     var newball1 = balls.create(ball.position.x-5,ball.position.y, 'ball'+(ball.size-1));
                     var newball2 = balls.create(ball.position.x+5,ball.position.y, 'ball'+(ball.size-1));
+                    game.physics.enable(newball1, Phaser.Physics.ARCADE);
+                    game.physics.enable(newball2, Phaser.Physics.ARCADE);
                     newball1.body.collideWorldBounds = true;
                     newball1.body.bounce.setTo(1, 1);
                     newball1.scale.setTo(scake, scake);
