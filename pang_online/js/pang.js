@@ -9,6 +9,7 @@ $(document).ready(function(){
             game.load.image('star', 'assets/star.png');
             game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
             game.load.image('bullet', 'assets/laser_bullet.png');
+            game.load.image('long_bullet', 'assets/long_bullet.png');
             }
 
             function create(){
@@ -39,6 +40,9 @@ $(document).ready(function(){
                     b.scale.setTo(0.04, 0.04);
                 }
 
+                long_bullet = game.add.group();
+
+
                 
                 //PLAYER
 
@@ -52,13 +56,17 @@ $(document).ready(function(){
                 player.animations.add('left', [0, 1, 2, 3], 10, true);
                 player.animations.add('right', [5, 6,7, 8], 10, true);
 
+                long_bullet_instance = long_bullet.create(player.x, player.y, 'long_bullet', 1);
+                long_bullet_instance.exists = false;
+                long_bullet_instance.visible = false;
+
                 //MOVIMIENTO
 
                 cursors = game.input.keyboard.createCursorKeys();   
                 
                 
                 spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-                spacebar.onDown.add(fireBullet, this);
+                spacebar.onDown.add(fireLongBullet, this);
                 game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);           
                 
             }
@@ -105,6 +113,11 @@ $(document).ready(function(){
     
             function resetBullet(bullet){
                 bullet.kill();
+            }
+
+            function fireLongBullet(){
+                long_bullet_instance.reset(player.x, player.y);
+                long_bullet_instance.body.velocity.y = -200;
             }
 
         });
