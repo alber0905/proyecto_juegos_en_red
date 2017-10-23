@@ -85,7 +85,7 @@ $(document).ready(function(){
                 //BOLAS
                 
                 balls = game.add.group();
-                //ball = game.add.sprite(400, 200, 'ball');
+                ball =balls.create(400, 200, 'ball');
                 ball.size = 1;
                 game.physics.enable(balls, Phaser.Physics.ARCADE);
 
@@ -189,6 +189,7 @@ $(document).ready(function(){
 
             function stopLongBullet(long_bullet){
                long_bullet.kill();
+            }
             function collisionBall(){
                 ball.kill();
             }
