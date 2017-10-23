@@ -7,8 +7,7 @@ $(document).ready(function(){
             game.load.image('sky', 'assets/sky.png');
             game.load.image('ground', 'assets/platform.png');
             game.load.image('star', 'assets/star.png');
-            game.load.spritesheet('dude', 'assets/player.png', 32, 32);
-            game.load.spritesheet('dude', 'assets/player_rightmove.png', 32, 32);
+            game.load.spritesheet('dude', 'assets/player.png', 32, 34);
             game.load.image('bullet', 'assets/laser_bullet.png');
             game.load.image('long_bullet', 'assets/long_bullet.png');
             game.load.image('ball', 'assets/big_red_ball.png');
