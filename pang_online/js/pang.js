@@ -20,17 +20,17 @@ $(document).ready(function(){
                 game.physics.startSystem(Phaser.Physics.ARCADE);
                 sky = game.add.sprite(0, 0, 'sky');
                 sky.scale.setTo(2, 2);
+                bullets = game.add.group();
                 platforms = game.add.group();
                 platforms.enableBody = true;
 
-                var ground = platforms.create(0, game.world.height - 64, 'ground');
+                var ground = platforms.create(0, game.world.height - 64, 'ground', 3);
                 ground.scale.setTo(4, 2);
 
                 ground.body.immovable = true;
 
                 //BALAS
 
-                bullets = game.add.group();
                 bullets.enableBody = true;
                 bullets.physicsBodyType = Phaser.Physics.ARCADE;
 
@@ -44,7 +44,7 @@ $(document).ready(function(){
                     b.scale.setTo(0.04, 0.04);
                 }
 
-                long_bullet = game.add.group();
+                
 
 
                 
@@ -60,9 +60,12 @@ $(document).ready(function(){
                 player.animations.add('moveleft', [0, 1, 2, 3], 10, true);
                 player.animations.add('moveright', [13, 14, 15, 16], 10, true);
 
-                long_bullet_instance = long_bullet.create(player.x, player.y, 'long_bullet', 1);
+                long_bullet_instance = bullets.create(player.x, player.y, 'long_bullet');
                 long_bullet_instance.exists = false;
                 long_bullet_instance.visible = false;
+                game.world.sendToBack(long_bullet_instance);
+               
+                
 
                 //MOVIMIENTO
 
@@ -70,7 +73,7 @@ $(document).ready(function(){
                 
                 
                 spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-                spacebar.onDown.add(fireBullet, this);
+                spacebar.onDown.add(fireLongBullet, this);
                 game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
                 //BOLAS
