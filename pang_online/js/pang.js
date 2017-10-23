@@ -12,6 +12,9 @@ $(document).ready(function(){
             game.load.image('bullet', 'assets/laser_bullet.png');
             game.load.image('long_bullet', 'assets/superlong_bullet.png');
             game.load.image('ball', 'assets/big_red_ball.png');
+            game.load.image('western', 'assets/western.png');
+            game.load.image('starvader', 'assets/starvader.png');
+            game.load.image('cinema', 'assets/cinema.jpg');
             }
 
             var scake = 1;
@@ -19,8 +22,8 @@ $(document).ready(function(){
 
             function create(){
                 game.physics.startSystem(Phaser.Physics.ARCADE);
-                sky = game.add.sprite(0, 0, 'sky');
-                sky.scale.setTo(2, 2);
+                sky = game.add.sprite(0, 0, 'western');
+                sky.scale.setTo(0.5, 0.5);
                 bullets = game.add.group();
                 platforms = game.add.group();
                 platforms.enableBody = true;
