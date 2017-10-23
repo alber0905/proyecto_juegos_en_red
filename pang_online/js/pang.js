@@ -45,9 +45,6 @@ $(document).ready(function(){
                 }
 
                 
-
-
-                
                 //PLAYER
 
                 player = game.add.sprite(32, game.world.height-150, 'dude');
@@ -71,16 +68,14 @@ $(document).ready(function(){
 
                 cursors = game.input.keyboard.createCursorKeys();   
                 
-                
                 spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-                spacebar.onDown.add(fireLongBullet, this);
+                spacebar.onDown.add(fireBullet, this);
                 game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
                 //BOLAS
                 
                 balls = game.add.group();
                 ball = game.add.sprite(400, 200, 'ball');
-
 
                 game.physics.enable(ball, Phaser.Physics.ARCADE);
 
@@ -109,8 +104,9 @@ $(document).ready(function(){
             function update(){
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
                 game.physics.arcade.collide(ball, platforms);
+                game.physics.arcade.overlap(ball, bullets, collisionBall);
 
-
+                    
                 player.body.velocity.x = 0;
                 if(cursors.left.isDown){
                     player.body.velocity.x = -150;
@@ -154,6 +150,10 @@ $(document).ready(function(){
             function fireLongBullet(){
                 long_bullet_instance.reset(player.x, player.y);
                 long_bullet_instance.body.velocity.y = -200;
+            }
+
+            function collisionBall(){
+                ball.kill();
             }
 
         });
