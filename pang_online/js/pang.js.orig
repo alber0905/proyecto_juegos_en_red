@@ -70,6 +70,10 @@ $(document).ready(function(){
                 
                 
                 spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+<<<<<<< HEAD
+                spacebar.onDown.add(fireLongBullet, this);
+                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);           
+=======
                 spacebar.onDown.add(fireBullet, this);
                 game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
@@ -78,9 +82,11 @@ $(document).ready(function(){
                 balls = game.add.group();
                 ball = game.add.sprite(400, 200, 'ball');
 
+                knocker = game.add.sprite(400, 200, 'dude');
 
-                game.physics.enable(ball, Phaser.Physics.ARCADE);
+                game.physics.enable([knocker, ball], Phaser.Physics.ARCADE);
 
+                knocker.body.immovable = true;
 
                 //  This gets it moving
                 //ball.body.velocity.setTo(200, 200);
@@ -96,11 +102,15 @@ $(document).ready(function(){
 
                 ball.scale.setTo(scake, scake);
                 ball.body.collideWorldBounds = true;
-                player.body.collideWorldBounds = true;
+                knocker.body.collideWorldBounds = true;
                 //ball.body.collide('platforms');
+                knocker.scale.setTo(0.6, 0.6);
                 ball.body.bounce.setTo(1, 1);
                 ball.body.velocity.setTo(100, 100);
                 ball.body.gravity.setTo(0, gravity);
+                knocker.body.gravity.setTo(0, gravity / 50);
+                knocker.reset(200, game.world.height - 120);
+>>>>>>> 496a69c03bcf228a0a67e6baea72f093659ec9b6
                 
             }
 
