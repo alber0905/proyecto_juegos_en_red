@@ -152,3 +152,17 @@ $(document).ready(function(){
         });
 
        
+            }
+    
+            function resetBullet(bullet){
+                bullet.kill();
+            }
+
+            function fireLongBullet(){
+                long_bullet_instance.reset(player.x, player.y);
+                long_bullet_instance.body.velocity.y = -200;
+            }
+
+        });
+
+       
