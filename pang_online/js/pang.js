@@ -113,7 +113,7 @@ $(document).ready(function(){
                 //Score
                 scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
                 //Lives
-                livesText = game.add.text(320, 16, 'Lives: 0', { fontSize: '32px', fill: '#000' });
+                livesText = game.add.text(320, 16, 'Lives: 3', { fontSize: '32px', fill: '#000' });
             }
 
             function dividirBolas(ball){
