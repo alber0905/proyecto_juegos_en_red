@@ -87,7 +87,7 @@ $(document).ready(function(){
                 balls = game.add.group();
                 //ball = game.add.sprite(400, 200, 'ball');
                 ball = balls.create(400,200, 'ball');
-                game.physics.enable(balls, Phaser.Physics.ARCADE);
+                game.physics.enable(ball, Phaser.Physics.ARCADE);
 
 
                 //  This gets it moving
@@ -117,6 +117,8 @@ $(document).ready(function(){
             }
 
             function dividirBolas(ball){
+                    var velox = Math.abs(ball.body.velocity.x);
+                    var veloy = Math.abs(ball.body.velocity.y);
                 if (ball.size > 1){
                     var newball1 = balls.create(ball.position.x-5,ball.position.y, 'ball'+(ball.size-1));
                     var newball2 = balls.create(ball.position.x+5,ball.position.y, 'ball'+(ball.size-1));
@@ -126,16 +128,17 @@ $(document).ready(function(){
                     newball1.body.bounce.setTo(1, 1);
                     newball1.scale.setTo(scake, scake);
                     newball1.body.collideWorldBounds = true;
-                    newball1.body.velocity.setTo(-100, -100);
+                    newball1.body.velocity.setTo(20 + velox, veloy/1.25);
                     newball1.body.gravity.setTo(0, gravity);
                     newball2.body.collideWorldBounds = true;
                     newball2.body.bounce.setTo(1, 1);
                     newball2.scale.setTo(scake, scake);
                     newball2.body.collideWorldBounds = true;
-                    newball2.body.velocity.setTo(100, 100);
+                    newball2.body.velocity.setTo(-25 - velox, veloy/1.25);
                     newball2.body.gravity.setTo(0, gravity);
                     newball1.size = ball.size -1;
                     newball2.size = ball.size -1;
+
                 }
                 score += 10;
                 scoreText.text = 'Score: ' + score;
