@@ -2,6 +2,7 @@ $(document).ready(function(){
             var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
             var platforms;
             var player;
+            var lives = 3;
             var firing = false;
             var score = 0;
             function preload(){
@@ -15,6 +16,8 @@ $(document).ready(function(){
             game.load.image('ball3', 'assets/medium_red_ball.png');
             game.load.image('ball2', 'assets/small_red_ball.png');
             game.load.image('ball1', 'assets/small_small_red_ball.png');
+            game.load.image('starvader', 'assets/starvader.png');
+            game.load.image('oeste', 'assets/oeste.png');
             }
 
             var scake = 3;
@@ -23,8 +26,7 @@ $(document).ready(function(){
 
             function create(){
                 game.physics.startSystem(Phaser.Physics.ARCADE);
-                sky = game.add.sprite(0, 0, 'sky');
-                sky.scale.setTo(2, 2);
+                generateBackground();
                 bullets = game.add.group();
                 platforms = game.add.group();
                 platforms.enableBody = true;
@@ -109,8 +111,9 @@ $(document).ready(function(){
                 ball.size = 4;
 
                 //Score
-                scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-                
+                scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
+                //Lives
+                livesText = game.add.text(320, 16, 'Lives: 0', { fontSize: '32px', fill: '#000' });
             }
 
             function dividirBolas(ball){
@@ -145,6 +148,7 @@ $(document).ready(function(){
                 game.physics.arcade.collide(balls, platforms);
                 game.physics.arcade.collide(bullets, platforms, killLongBullet, null, this);
                 game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
+                game.physics.arcade.collide(balls, player, playerDeath);
 
                     
                 player.body.velocity.x = 0;
@@ -206,6 +210,26 @@ $(document).ready(function(){
                 }
             }
 
+            function playerDeath(){
+                lives--;
+                livesText.text = 'Lives: ' + lives;
+                player.kill();
+                setTimeout(playerReset, 1000);
+            }
+
+            function playerReset(){
+                player.reset(32, game.world.height-150);
+            }
+
+            function generateBackground(){
+                var background = Math.floor((Math.random() * 10) + 1);
+                if (background < 5){
+                    sky = game.add.sprite(-180, 0, 'oeste');
+                } else {
+                    sky = game.add.sprite(-100, 0, 'starvader');
+                }
+                sky.scale.setTo(0.8, 0.8);
+            }
         });
 
        
