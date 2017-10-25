@@ -146,7 +146,7 @@ $(document).ready(function(){
                 game.physics.arcade.collide(balls, platforms);
                 game.physics.arcade.collide(bullets, platforms, killLongBullet, null, this);
                 game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
-                game.physics.arcade.collide(balls, player, playerDeath);
+                game.physics.arcade.overlap(balls, player, playerDeath);
 
                     
                 player.body.velocity.x = 0;
@@ -216,7 +216,7 @@ $(document).ready(function(){
             }
 
             function playerReset(){
-                player.reset(32, game.world.height-150);
+                player.reset(0, game.world.height-150);
             }
 
             function generateBackground(){
