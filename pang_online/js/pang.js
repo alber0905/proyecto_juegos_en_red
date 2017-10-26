@@ -66,6 +66,7 @@ $(document).ready(function(){
 
                 player.animations.add('moveleft', [0, 1, 2, 3], 10, true);
                 player.animations.add('moveright', [13, 14, 15, 16], 10, true);
+                
 
                 long_bullet_instance = bullets.create(player.x, player.y, 'long_bullet');
                 long_bullet_instance.exists = false;
@@ -113,7 +114,8 @@ $(document).ready(function(){
                 //Score
                 scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
                 //Lives
-                livesText = game.add.text(320, 16, 'Lives: 3', { fontSize: '32px', fill: '#000' });
+                livesText = game.add.text(320, 16, 'Lives: ' + lives, { fontSize: '32px', fill: '#000' });
+                
             }
 
             function dividirBolas(ball){
@@ -176,7 +178,6 @@ $(document).ready(function(){
                 
             }
 
-
             function fireBullet(){
                     bullet = bullets.getFirstExists(false);
                     if(bullet){
@@ -231,6 +232,8 @@ $(document).ready(function(){
                 }
                 sky.scale.setTo(0.8, 0.8);
             }
+
+            
         });
 
        
