@@ -147,6 +147,8 @@ $(document).ready(function(){
             }
 
             function update(){
+                //la función de abajo hace que acabe la partida pero no sale bien el texto
+                //gameOver();
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
                 game.physics.arcade.collide(balls, platforms);
                 game.physics.arcade.collide(bullets, platforms, killLongBullet, null, this);
@@ -231,6 +233,20 @@ $(document).ready(function(){
                     sky = game.add.sprite(-100, 0, 'starvader');
                 }
                 sky.scale.setTo(0.8, 0.8);
+            }
+
+            function showGameOverText(){
+                var stateText = game.add.text(50, 50, ' ', {font: '84px Arial', fill: '#F2F2F2'});
+                stateText.text = " GAME OVER \n Click to restart";
+                stateText.visible = true;
+            }
+
+            function gameOver(){
+                if (lives <= 0){
+                    setTimeout(showGameOverText, 10000);
+                    game.world.removeAll();
+                    
+                }
             }
 
             
