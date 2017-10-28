@@ -67,7 +67,7 @@ $(document).ready(function(){
 
                 player.animations.add('moveleft', [0, 1, 2, 3], 10, true);
                 player.animations.add('moveright', [13, 14, 15, 16], 10, true);
-
+                
                 player2 = game.add.sprite(32, game.world.height-150, 'dude');
                 game.physics.arcade.enable(player2);
 
@@ -133,7 +133,8 @@ $(document).ready(function(){
                 //Score
                 scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
                 //Lives
-                livesText = game.add.text(320, 16, 'Lives: 0', { fontSize: '32px', fill: '#000' });
+                livesText = game.add.text(320, 16, 'Lives: ' + lives, { fontSize: '32px', fill: '#000' });
+                
             }
 
             function dividirBolas(ball){
@@ -165,12 +166,14 @@ $(document).ready(function(){
             }
 
             function update(){
+                //la función de abajo hace que acabe la partida pero no sale bien el texto
+                //gameOver();
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
                 var hitPlatform2 = game.physics.arcade.collide(player2, platforms);
                 game.physics.arcade.collide(balls, platforms);
                 game.physics.arcade.collide(bullets, platforms, killLongBullet, null, this);
                 game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
-                game.physics.arcade.collide(balls, player, playerDeath);
+                game.physics.arcade.overlap(balls, player, playerDeath);
                 game.physics.arcade.collide(balls, player2, playerDeath2);
 
                     
@@ -218,7 +221,6 @@ $(document).ready(function(){
 
                 
             }
-
 
             function fireBullet(){
                     bullet = bullets.getFirstExists(false);
@@ -275,7 +277,7 @@ $(document).ready(function(){
             }
 
             function playerReset(){
-                player.reset(32, game.world.height-150);
+                player.reset(0, game.world.height-150);
             }
             function playerReset2(){
                 player2.reset(32, game.world.height-150);
@@ -290,6 +292,22 @@ $(document).ready(function(){
                 }
                 sky.scale.setTo(0.8, 0.8);
             }
+
+            function showGameOverText(){
+                var stateText = game.add.text(50, 50, ' ', {font: '84px Arial', fill: '#F2F2F2'});
+                stateText.text = " GAME OVER \n Click to restart";
+                stateText.visible = true;
+            }
+
+            function gameOver(){
+                if (lives <= 0){
+                    setTimeout(showGameOverText, 10000);
+                    game.world.removeAll();
+                    
+                }
+            }
+
+            
         });
 
        
