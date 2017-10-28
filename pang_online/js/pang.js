@@ -22,6 +22,7 @@ $(document).ready(function(){
 
             var scake = 3;
             var gravity = 600;
+            var cursors2 = [];
 
 
             function create(){
@@ -67,19 +68,37 @@ $(document).ready(function(){
                 player.animations.add('moveleft', [0, 1, 2, 3], 10, true);
                 player.animations.add('moveright', [13, 14, 15, 16], 10, true);
 
+                player2 = game.add.sprite(32, game.world.height-150, 'dude');
+                game.physics.arcade.enable(player2);
+
+                player2.body.bounce.y = 0.1;
+                player2.body.gravity.y = 300;
+                player2.body.collideWorldBounds = true;
+
+                player2.animations.add('moveleft', [0, 1, 2, 3], 10, true);
+                player2.animations.add('moveright', [13, 14, 15, 16], 10, true);
+
                 long_bullet_instance = bullets.create(player.x, player.y, 'long_bullet');
                 long_bullet_instance.exists = false;
                 long_bullet_instance.visible = false;
                 game.world.sendToBack(long_bullet_instance);
                
+                long_bullet_instance2 = bullets.create(player2.x, player2.y, 'long_bullet');
+                long_bullet_instance2.exists = false;
+                long_bullet_instance2.visible = false;
+                game.world.sendToBack(long_bullet_instance2);
                 
 
                 //MOVIMIENTO
 
                 cursors = game.input.keyboard.createCursorKeys();   
-                
                 spacebar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
                 spacebar.onDown.add(fireLongBullet, this);
+                game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
+                cursors2[0]=game.input.keyboard.addKey(Phaser.Keyboard.A);
+                cursors2[1]=game.input.keyboard.addKey(Phaser.Keyboard.D);
+                cursors2[3] = game.input.keyboard.addKey(Phaser.Keyboard.W);
+                cursors2[3].onDown.add(fireLongBullet2, this);
                 game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
                 //BOLAS
@@ -104,6 +123,7 @@ $(document).ready(function(){
                 ball.scale.setTo(scake, scake);
                 //ball.body.collideWorldBounds = true;
                 player.body.collideWorldBounds = true;
+                player2.body.collideWorldBounds = true
                 //ball.body.collide('platforms');
                 ball.body.bounce.setTo(1, 1);
                 ball.body.velocity.setTo(100, 100);
@@ -146,10 +166,12 @@ $(document).ready(function(){
 
             function update(){
                 var hitPlatform = game.physics.arcade.collide(player, platforms);
+                var hitPlatform2 = game.physics.arcade.collide(player2, platforms);
                 game.physics.arcade.collide(balls, platforms);
                 game.physics.arcade.collide(bullets, platforms, killLongBullet, null, this);
                 game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
                 game.physics.arcade.collide(balls, player, playerDeath);
+                game.physics.arcade.collide(balls, player2, playerDeath2);
 
                     
                 player.body.velocity.x = 0;
@@ -173,6 +195,27 @@ $(document).ready(function(){
                     player.frame = 4;
                 } 
 
+                player2.body.velocity.x = 0;
+                if(cursors2[0].isDown){
+                    player2.body.velocity.x = -150;
+                    player2.animations.play('moveleft');
+                    if(player2.position.x == 0 ){
+                        player2.position.x = game.world.width;
+                    }
+                }
+                else if(cursors2[1].isDown){
+                    player2.body.velocity.x = 150;
+                    player2.animations.play('moveright');
+                    if(player2.position.x >= game.world.width-40){
+                        player2.position.x = 0;
+                    }   
+                }
+                
+                else{
+                    player2.animations.stop();
+                    player2.frame = 4;
+                } 
+
                 
             }
 
@@ -190,6 +233,13 @@ $(document).ready(function(){
             }
 
             function fireLongBullet(){
+                if(!firing){
+                    firing = true;
+                    long_bullet_instance.reset(player.x, player.y);
+                    long_bullet_instance.body.velocity.y = -200;
+                }
+            }
+            function fireLongBullet2(){
                 if(!firing){
                     firing = true;
                     long_bullet_instance.reset(player.x, player.y);
@@ -217,9 +267,18 @@ $(document).ready(function(){
                 player.kill();
                 setTimeout(playerReset, 1000);
             }
+            function playerDeath2(){
+                lives--;
+                livesText.text = 'Lives: ' + lives;
+                player2.kill();
+                setTimeout(playerReset, 1000);
+            }
 
             function playerReset(){
                 player.reset(32, game.world.height-150);
+            }
+            function playerReset2(){
+                player2.reset(32, game.world.height-150);
             }
 
             function generateBackground(){
