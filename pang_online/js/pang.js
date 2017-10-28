@@ -4,6 +4,7 @@ $(document).ready(function(){
             var player;
             var lives = 3;
             var firing = false;
+            var firing2 = false;
             var score = 0;
             function preload(){
             game.load.image('sky', 'assets/sky.png');
@@ -29,6 +30,7 @@ $(document).ready(function(){
                 game.physics.startSystem(Phaser.Physics.ARCADE);
                 generateBackground();
                 bullets = game.add.group();
+                bullets2 = game.add.group();
                 platforms = game.add.group();
                 platforms.enableBody = true;
 
@@ -44,6 +46,8 @@ $(document).ready(function(){
 
                 bullets.enableBody = true;
                 bullets.physicsBodyType = Phaser.Physics.ARCADE;
+                bullets2.enableBody = true;
+                bullets2.physicsBodyType = Phaser.Physics.ARCADE;
 
                 for (var i = 0; i<20; i++){
                     var b = bullets.create(0,0, 'bullet');
@@ -53,6 +57,14 @@ $(document).ready(function(){
                     b.checkWorldBounds = true;
                     b.events.onOutOfBounds.add(resetBullet, this);
                     b.scale.setTo(0.04, 0.04);
+
+                    var bul = bullets2.create(0,0, 'bullet');
+                    bul.name = 'bullet'+i;
+                    bul.exists = false;
+                    bul.visible = false;
+                    bul.checkWorldBounds = true;
+                    bul.events.onOutOfBounds.add(resetBullet2, this);
+                    bul.scale.setTo(0.04, 0.04);
                 }
 
                 
@@ -83,7 +95,7 @@ $(document).ready(function(){
                 long_bullet_instance.visible = false;
                 game.world.sendToBack(long_bullet_instance);
                
-                long_bullet_instance2 = bullets.create(player2.x, player2.y, 'long_bullet');
+                long_bullet_instance2 = bullets2.create(player2.x, player2.y, 'long_bullet');
                 long_bullet_instance2.exists = false;
                 long_bullet_instance2.visible = false;
                 game.world.sendToBack(long_bullet_instance2);
@@ -173,8 +185,10 @@ $(document).ready(function(){
                 game.physics.arcade.collide(balls, platforms);
                 game.physics.arcade.collide(bullets, platforms, killLongBullet, null, this);
                 game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
+                game.physics.arcade.collide(bullets2, platforms, killLongBullet2, null, this);
+                game.physics.arcade.overlap(balls, bullets2, collisionBall2, null, this);
                 game.physics.arcade.overlap(balls, player, playerDeath);
-                game.physics.arcade.collide(balls, player2, playerDeath2);
+                game.physics.arcade.overlap(balls, player2, playerDeath2);
 
                     
                 player.body.velocity.x = 0;
@@ -233,6 +247,9 @@ $(document).ready(function(){
             function resetBullet(bullet){
                 bullet.kill();
             }
+            function resetBullet2(bullet){
+                bullet2.kill();
+            }
 
             function fireLongBullet(){
                 if(!firing){
@@ -242,10 +259,10 @@ $(document).ready(function(){
                 }
             }
             function fireLongBullet2(){
-                if(!firing){
-                    firing = true;
-                    long_bullet_instance.reset(player.x, player.y);
-                    long_bullet_instance.body.velocity.y = -200;
+                if(!firing2){
+                    firing2 = true;
+                    long_bullet_instance2.reset(player2.x, player2.y);
+                    long_bullet_instance2.body.velocity.y = -200;
                 }
             }
 
@@ -255,11 +272,24 @@ $(document).ready(function(){
                 dividirBolas(ball1);
                 ball1.kill();
             }
+            function collisionBall2(ball1, bullet){
+                bullet.kill();
+                firing2 = false;
+                dividirBolas(ball1);
+                ball1.kill();
+            }
 
             function killLongBullet(bullet, platform){
                 if(platform.y<10){
                     bullet.kill();
                     firing = false;
+                }
+            }
+
+            function killLongBullet2(bullet, platform){
+                if(platform.y<10){
+                    bullet.kill();
+                    firing2 = false;
                 }
             }
 
@@ -273,14 +303,14 @@ $(document).ready(function(){
                 lives--;
                 livesText.text = 'Lives: ' + lives;
                 player2.kill();
-                setTimeout(playerReset, 1000);
+                setTimeout(playerReset2, 1000);
             }
 
             function playerReset(){
                 player.reset(0, game.world.height-150);
             }
             function playerReset2(){
-                player2.reset(32, game.world.height-150);
+                player2.reset(0, game.world.height-150);
             }
 
             function generateBackground(){
