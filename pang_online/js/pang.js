@@ -6,6 +6,7 @@ $(document).ready(function(){
             var firing = false;
             var firing2 = false;
             var score = 0;
+            var newball = true;
             function preload(){
             game.load.image('sky', 'assets/sky.png');
             game.load.image('ground', 'assets/platform.png');
@@ -190,6 +191,11 @@ $(document).ready(function(){
                 game.physics.arcade.overlap(balls, player, playerDeath);
                 game.physics.arcade.overlap(balls, player2, playerDeath2);
 
+                if (newball){
+                    newball = false;
+                    setTimeout(generarBolas,5000);
+                }
+
                     
                 player.body.velocity.x = 0;
                 if(cursors.left.isDown){
@@ -339,6 +345,19 @@ $(document).ready(function(){
                     game.world.removeAll();
                     
                 }
+            }
+
+            function generarBolas(){
+                var newball3 = balls.create(400,200, 'ball');
+                game.physics.enable(newball3, Phaser.Physics.ARCADE);
+                newball3.body.collideWorldBounds = true;
+                newball3.body.bounce.setTo(1, 1);
+                newball3.scale.setTo(scake, scake);
+                newball3.body.velocity.setTo(100, 100);
+                newball3.body.gravity.setTo(0, gravity);
+                newball3.size = 4;
+                newball = true;
+
             }
 
             
