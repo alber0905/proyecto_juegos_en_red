@@ -5,6 +5,9 @@
 .margin_top_40{
     margin-top: 40px;
 }
+.padding_top_20{
+    padding-top: 20px;
+}
 
 .game_canvas{
     width: 600px;
@@ -41,6 +44,18 @@ body{
     cursor: pointer;
 }
 
+.leaderboar_btn{
+    cursor:pointer;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+.leaderboar_btn:hover{
+    background-color: rgba(255, 0, 0, 0.69);
+}
+
+
 .menu_buttons button:hover{
     background-color: rgba(255, 0, 0, 0.69);
 }
@@ -58,4 +73,23 @@ body{
 
 .menu_buttons a{
     color: initial;
+}
+
+.relative{
+    position:relative;
+}
+
+.table{
+    display: table;
+    margin: 30px;
+    font-family: Lucida Console;
+
+}
+
+.table_row{
+    display:table-row;
+}
+
+.table_cell{
+    display:table-cell;
 }
