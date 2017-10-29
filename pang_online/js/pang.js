@@ -9,6 +9,7 @@ $(document).ready(function(){
             var player1isDead = false;
             var player2isDead = false;
     var score = 0;
+    var newball = true;
     function preload(){
     game.load.image('sky', 'assets/sky.png');
     game.load.image('ground', 'assets/platform.png');
@@ -87,7 +88,7 @@ $(document).ready(function(){
         player.animations.add('moveleft', [0, 1, 2, 3], 10, true);
         player.animations.add('moveright', [13, 14, 15, 16], 10, true);
         
-                player2 = game.add.sprite(game.world.width-100, game.world.height-150, 'dude2');
+        player2 = game.add.sprite(game.world.width-100, game.world.height-150, 'dude2');
         game.physics.arcade.enable(player2);
 
         player2.body.bounce.y = 0.1;
@@ -191,8 +192,21 @@ $(document).ready(function(){
         game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
         game.physics.arcade.collide(bullets2, platforms, killLongBullet2, null, this);
         game.physics.arcade.overlap(balls, bullets2, collisionBall2, null, this);
-                ballCollidePlayer1();
-                ballCollidePlayer2();
+        //if (ballCollidePlayer1()){
+        //    inmortalPlayer1();
+        //}
+        //if (ballCollidePlayer2()) {
+        //    inmortalPlayer2();
+        //}
+        if (!player1isDead){
+            game.physics.arcade.overlap(balls, player, playerDeath);
+            
+        }
+        if(!player2isDead){
+            game.physics.arcade.overlap(balls, player2, playerDeath2);
+        }
+        
+        
                 
         if (newball){
             newball = false;
@@ -354,22 +368,22 @@ $(document).ready(function(){
     }
 
     function playerDeath(){
-                livesplayer1--;
+        livesplayer1--;
         firing = true;
-                livesText.text = 'Lives P1: ' + livesplayer1;
+        livesText.text = 'Lives P1: ' + livesplayer1;
         player.kill();
-                setTimeout(playerReset, 1500);
-                //player1isDead = true;
-                //inmortalPlayer1();
+        setTimeout(playerReset, 1500);
+        player1isDead = true;
+        setTimeout(changeplayer1death, 10000);
     }
     function playerDeath2(){
-                livesplayer2--;
+        livesplayer2--;
         firing2 = true;
-                livesText2.text = 'Lives P2: ' + livesplayer2;
+        livesText2.text = 'Lives P2: ' + livesplayer2;
         player2.kill();
-                setTimeout(playerReset2, 1500);
-                //player2isDead = true;
-                //inmortalPlayer2();
+        setTimeout(playerReset2, 1500);
+        player2isDead = true;
+        setTimeout(changeplayer2death, 10000);
     }
 
     function playerReset(){
@@ -405,28 +419,29 @@ $(document).ready(function(){
         }
     }
 
-            function ballCollidePlayer1(){
-                game.physics.arcade.overlap(balls, player, playerDeath);
-            }
+    function ballCollidePlayer1(){
+        if(game.physics.arcade.overlap(balls, player, playerDeath)){
+            return true;
+        }
+        
+       
+    }
 
-            function ballCollidePlayer2(){
-                game.physics.arcade.overlap(balls, player2, playerDeath2);
-            }
+    function ballCollidePlayer2(){
+        if (game.physics.arcade.overlap(balls, player2, playerDeath2)){
+            return true;
+        }
+        
+    }
 
-            function inmortalPlayer1(){
-                if (player1isDead){
-                    setTimeout(ballCollidePlayer1, 1000);
-                    player1isDead = false;
-                } 
-            }
+    function changeplayer1death(){
+        player1isDead = false;
+    }
 
-            function inmortalPlayer2(){
-                if (player2isDead){
-                    setTimeout(ballCollidePlayer2, 1000);
-                    player2isDead = false;
-                } 
-            }
-            
+    function changeplayer2death(){
+        player2isDead = false;
+    }
+
      
     function generarBolas(){
         var newball3 = balls.create(400,200, 'ball');
