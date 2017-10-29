@@ -2,12 +2,12 @@ $(document).ready(function(){
     var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
     var platforms;
     var player;
-            var livesplayer1 = 3;
-            var livesplayer2 = 3;
+    var livesplayer1 = 3;
+    var livesplayer2 = 3;
     var firing = false;
     var firing2 = false;
-            var player1isDead = false;
-            var player2isDead = false;
+    var player1isDead = false;
+    var player2isDead = false;
     var score = 0;
     var newball = true;
     function preload(){
@@ -15,7 +15,7 @@ $(document).ready(function(){
     game.load.image('ground', 'assets/platform.png');
     game.load.image('star', 'assets/star.png');
     game.load.spritesheet('dude', 'assets/player.png', 32, 34);
-            game.load.spritesheet('dude2', 'assets/player2.png', 32, 34)
+    game.load.spritesheet('dude2', 'assets/player2.png', 32, 34)
     game.load.image('bullet', 'assets/laser_bullet.png');
     game.load.image('long_bullet', 'assets/superlong_bullet.png');
     game.load.image('ball', 'assets/big_red_ball.png');
@@ -24,6 +24,7 @@ $(document).ready(function(){
     game.load.image('ball1', 'assets/small_small_red_ball.png');
     game.load.image('starvader', 'assets/starvader.png');
     game.load.image('oeste', 'assets/oeste.png');
+    game.load.image('gameover', 'assets/gameover.jpg');
     }
 
     var scake = 3;
@@ -45,7 +46,6 @@ $(document).ready(function(){
         ceil.scale.setTo(4,2);
 
         generatePlatforms();
-
 
         ground.body.immovable = true;
         ceil.body.immovable = true;
@@ -122,10 +122,13 @@ $(document).ready(function(){
         game.input.keyboard.addKeyCapture([Phaser.Keyboard.SPACEBAR]);
 
         //BOLAS
-        
         balls = game.add.group();
         ball = balls.create(400,200, 'ball');
         game.physics.enable(balls, Phaser.Physics.ARCADE);
+
+        //POWER UPS
+        powerups = game.add.group();
+
 
 
         //  This makes the game world bounce-able
@@ -149,8 +152,8 @@ $(document).ready(function(){
         //Score
         scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
         //Lives
-                livesText = game.add.text(0, 550, 'Lives P1: ' + livesplayer1, { fontSize: '32px', fill: '#000' });
-                livesText2 = game.add.text(400, 550, 'Lives P2: ' + livesplayer2, { fontSize: '32px', fill: '#000' });
+        livesText = game.add.text(0, 550, 'Lives P1: ' + livesplayer1, { fontSize: '32px', fill: '#000' });
+        livesText2 = game.add.text(400, 550, 'Lives P2: ' + livesplayer2, { fontSize: '32px', fill: '#000' });
         
     }
 
@@ -176,7 +179,7 @@ $(document).ready(function(){
             newball2.body.gravity.setTo(0, gravity);
             newball1.size = ball.size -1;
             newball2.size = ball.size -1;
-
+            generatePowerUp(ball);
         }
         score += 10;
         scoreText.text = 'Score: ' + score;
@@ -184,30 +187,26 @@ $(document).ready(function(){
 
     function update(){
         //la función de abajo hace que acabe la partida pero no sale bien el texto
-        //gameOver();
+        gameOver();
         var hitPlatform = game.physics.arcade.collide(player, platforms);
         var hitPlatform2 = game.physics.arcade.collide(player2, platforms);
         game.physics.arcade.collide(balls, platforms);
+        game.physics.arcade.collide(powerups, platforms);
         game.physics.arcade.collide(bullets, platforms, killLongBullet, null, this);
         game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
         game.physics.arcade.collide(bullets2, platforms, killLongBullet2, null, this);
         game.physics.arcade.overlap(balls, bullets2, collisionBall2, null, this);
-        //if (ballCollidePlayer1()){
-        //    inmortalPlayer1();
-        //}
-        //if (ballCollidePlayer2()) {
-        //    inmortalPlayer2();
-        //}
+        game.physics.arcade.overlap(powerups, player, getPowerUp);
+        
         if (!player1isDead){
-            game.physics.arcade.overlap(balls, player, playerDeath);
-            
+            game.physics.arcade.overlap(balls, player, playerDeath);    
         }
-        if(!player2isDead){
+
+        if (!player2isDead){
             game.physics.arcade.overlap(balls, player2, playerDeath2);
         }
         
-        
-                
+             
         if (newball){
             newball = false;
             setTimeout(generarBolas,5000);
@@ -347,7 +346,7 @@ $(document).ready(function(){
 
     function worldPosition (){
         this.x = Math.floor(Math.random() *  game.world.width);
-        this.y =Math.floor(Math.random() * (game.world.height - game.world.height/2)) + game.world.height/4;
+        this.y = Math.floor(Math.random() * (game.world.height - game.world.height/2)) + game.world.height/4;
         this.checkPosition = function(pos){
             if(this.y<(pos.y+50) && this.y>(pos.y-50) && this.x<(pos.x+200) && this.x>(pos.x-200)){
                 this.x =  Math.floor(Math.random() *  game.world.width);
@@ -369,21 +368,26 @@ $(document).ready(function(){
 
     function playerDeath(){
         livesplayer1--;
-        firing = true;
         livesText.text = 'Lives P1: ' + livesplayer1;
+        firing = true;
         player.kill();
-        setTimeout(playerReset, 1500);
         player1isDead = true;
-        setTimeout(changeplayer1death, 10000);
+        if (livesplayer1 != 0){
+        setTimeout(playerReset, 1500);
+        setTimeout(changeplayer1death, 3000);
+        } 
     }
+
     function playerDeath2(){
         livesplayer2--;
-        firing2 = true;
         livesText2.text = 'Lives P2: ' + livesplayer2;
+        firing2 = true;
         player2.kill();
-        setTimeout(playerReset2, 1500);
         player2isDead = true;
-        setTimeout(changeplayer2death, 10000);
+        if (livesplayer2 != 0){
+        setTimeout(playerReset2, 1500);
+        setTimeout(changeplayer2death, 3000);
+        } 
     }
 
     function playerReset(){
@@ -406,32 +410,21 @@ $(document).ready(function(){
     }
 
     function showGameOverText(){
-        var stateText = game.add.text(50, 50, ' ', {font: '84px Arial', fill: '#F2F2F2'});
-        stateText.text = " GAME OVER \n Click to restart";
-        stateText.visible = true;
+        var gameoverbackground = game.add.sprite(0, 0, 'gameover');
+        var stateText = game.add.text(game.world.width/2-130, game.world.height/2-50, 'GAME OVER', { fontSize: '40px', fill: '#FE0000' });
+        var stateText2 = game.add.text(game.world.width/2-130, game.world.height/2, 'Volviendo a menú en 3, 2, 1...', { fontSize: '20px', fill: '#FE0000' });
     }
 
     function gameOver(){
-        if (lives <= 0){
-            setTimeout(showGameOverText, 10000);
-            game.world.removeAll();
+        if (livesplayer1==0 && livesplayer2==0){
+            showGameOverText();
+            setTimeout(redireccionarAMenu, 3000);
             
         }
     }
 
-    function ballCollidePlayer1(){
-        if(game.physics.arcade.overlap(balls, player, playerDeath)){
-            return true;
-        }
-        
-       
-    }
-
-    function ballCollidePlayer2(){
-        if (game.physics.arcade.overlap(balls, player2, playerDeath2)){
-            return true;
-        }
-        
+    function redireccionarAMenu(){
+        window.location.replace("index.html");
     }
 
     function changeplayer1death(){
@@ -442,7 +435,6 @@ $(document).ready(function(){
         player2isDead = false;
     }
 
-     
     function generarBolas(){
         var newball3 = balls.create(400,200, 'ball');
         game.physics.enable(newball3, Phaser.Physics.ARCADE);
@@ -453,9 +445,22 @@ $(document).ready(function(){
         newball3.body.gravity.setTo(0, gravity);
         newball3.size = 4;
         newball = true;
-
+    }
+    
+    function generatePowerUp(ball){
+        var num = Math.floor((Math.random() * 10) + 1);
+        if (num > 2){
+            var powerup = powerups.create(ball.position.x, ball.position.y, 'star');
+            game.physics.arcade.enable(powerup);
+            powerup.body.gravity.y = 100;
+            powerup.body.collideWorldBounds = true;
+        }
     }
 
+    //
+    function getPowerUp(){
+        
+    }
     
 });
 
