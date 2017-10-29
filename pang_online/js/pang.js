@@ -2,20 +2,22 @@ $(document).ready(function(){
     var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
     var platforms;
     var player;
-            var livesplayer1 = 3;
-            var livesplayer2 = 3;
+    var livesplayer1 = 3;
+    var livesplayer2 = 3;
     var firing = false;
     var firing2 = false;
-            var player1isDead = false;
-            var player2isDead = false;
-    var score = 0;
+    var player1isDead = false;
+    var player2isDead = false;
+    var scoreplayer1 = 0;
+    var scoreplayer2 = 0;
     var newball = true;
+    var tiempobolas = 20000;
     function preload(){
     game.load.image('sky', 'assets/sky.png');
     game.load.image('ground', 'assets/platform.png');
     game.load.image('star', 'assets/star.png');
     game.load.spritesheet('dude', 'assets/player.png', 32, 34);
-            game.load.spritesheet('dude2', 'assets/player2.png', 32, 34)
+    game.load.spritesheet('dude2', 'assets/player2.png', 32, 34)
     game.load.image('bullet', 'assets/laser_bullet.png');
     game.load.image('long_bullet', 'assets/superlong_bullet.png');
     game.load.image('ball', 'assets/big_red_ball.png');
@@ -147,7 +149,8 @@ $(document).ready(function(){
         ball.size = 4;
 
         //Score
-        scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
+        scoreText1 = game.add.text(16, 16, 'Score p1: 0', { fontSize: '32px', fill: '#000' });
+        scoreText2 = game.add.text(350, 16, 'Score p2: 0', { fontSize: '32px', fill: '#000' });
         //Lives
                 livesText = game.add.text(0, 550, 'Lives P1: ' + livesplayer1, { fontSize: '32px', fill: '#000' });
                 livesText2 = game.add.text(400, 550, 'Lives P2: ' + livesplayer2, { fontSize: '32px', fill: '#000' });
@@ -178,8 +181,6 @@ $(document).ready(function(){
             newball2.size = ball.size -1;
 
         }
-        score += 10;
-        scoreText.text = 'Score: ' + score;
     }
 
     function update(){
@@ -210,7 +211,8 @@ $(document).ready(function(){
                 
         if (newball){
             newball = false;
-            setTimeout(generarBolas,5000);
+            setTimeout(generarBolas,tiempobolas);
+            tiempobolas = tiempobolas - 1000;
         }
     
         player.body.velocity.x = 0;
@@ -267,10 +269,10 @@ $(document).ready(function(){
     }
 
     function resetBullet(bullet){
-        bullet.kill();
+        bullets.kill();
     }
     function resetBullet2(bullet){
-        bullet2.kill();
+        bullets2.kill();
     }
 
     function fireLongBullet(){
@@ -291,12 +293,16 @@ $(document).ready(function(){
     function collisionBall(ball1, bullet){
         bullet.kill();
         firing = false;
+        scoreplayer1 += 10;
+        scoreText1.text = 'Score p1: ' + scoreplayer1;
         dividirBolas(ball1);
         ball1.kill();
     }
     function collisionBall2(ball1, bullet){
         bullet.kill();
         firing2 = false;
+        scoreplayer2 += 10;
+        scoreText2.text = 'Score p2: ' + scoreplayer2;
         dividirBolas(ball1);
         ball1.kill();
     }
@@ -305,6 +311,12 @@ $(document).ready(function(){
         if(platform.y<game.world.height-100){
             bullet.kill();
             firing = false;
+        }
+    }
+    function killLongBullet2(bullet, platform){
+        if(platform.y<game.world.height-100){
+            bullet.kill();
+            firing2 = false;
         }
     }
 
@@ -357,13 +369,6 @@ $(document).ready(function(){
             else{
                 return false;
             }
-        }
-    }
-
-    function killLongBullet2(bullet, platform){
-        if(platform.y<10){
-            bullet.kill();
-            firing2 = false;
         }
     }
 
