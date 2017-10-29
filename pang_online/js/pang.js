@@ -2,15 +2,19 @@ $(document).ready(function(){
             var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
             var platforms;
             var player;
-            var lives = 3;
+            var livesplayer1 = 3;
+            var livesplayer2 = 3;
             var firing = false;
             var firing2 = false;
+            var player1isDead = false;
+            var player2isDead = false;
             var score = 0;
             function preload(){
             game.load.image('sky', 'assets/sky.png');
             game.load.image('ground', 'assets/platform.png');
             game.load.image('star', 'assets/star.png');
             game.load.spritesheet('dude', 'assets/player.png', 32, 34);
+            game.load.spritesheet('dude2', 'assets/player2.png', 32, 34)
             game.load.image('bullet', 'assets/laser_bullet.png');
             game.load.image('long_bullet', 'assets/superlong_bullet.png');
             game.load.image('ball', 'assets/big_red_ball.png');
@@ -83,7 +87,7 @@ $(document).ready(function(){
                 player.animations.add('moveleft', [0, 1, 2, 3], 10, true);
                 player.animations.add('moveright', [13, 14, 15, 16], 10, true);
                 
-                player2 = game.add.sprite(game.world.width-100, game.world.height-150, 'dude');
+                player2 = game.add.sprite(game.world.width-100, game.world.height-150, 'dude2');
                 game.physics.arcade.enable(player2);
 
                 player2.body.bounce.y = 0.1;
@@ -119,13 +123,9 @@ $(document).ready(function(){
                 //BOLAS
                 
                 balls = game.add.group();
-                //ball = game.add.sprite(400, 200, 'ball');
                 ball = balls.create(400,200, 'ball');
                 game.physics.enable(balls, Phaser.Physics.ARCADE);
 
-
-                //  This gets it moving
-                //ball.body.velocity.setTo(200, 200);
 
                 //  This makes the game world bounce-able
                 ball.body.collideWorldBounds = true;
@@ -148,7 +148,8 @@ $(document).ready(function(){
                 //Score
                 scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#000' });
                 //Lives
-                livesText = game.add.text(320, 16, 'Lives: ' + lives, { fontSize: '32px', fill: '#000' });
+                livesText = game.add.text(0, 550, 'Lives P1: ' + livesplayer1, { fontSize: '32px', fill: '#000' });
+                livesText2 = game.add.text(400, 550, 'Lives P2: ' + livesplayer2, { fontSize: '32px', fill: '#000' });
                 
             }
 
@@ -190,10 +191,10 @@ $(document).ready(function(){
                 game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
                 game.physics.arcade.collide(bullets2, platforms, killLongBullet2, null, this);
                 game.physics.arcade.overlap(balls, bullets2, collisionBall2, null, this);
-                game.physics.arcade.overlap(balls, player, playerDeath);
-                game.physics.arcade.overlap(balls, player2, playerDeath2);
-
-                    
+                ballCollidePlayer1();
+                ballCollidePlayer2();
+                
+    
                 player.body.velocity.x = 0;
                 if(cursors.left.isDown){
                     player.body.velocity.x = -150;
@@ -294,7 +295,6 @@ $(document).ready(function(){
                 var ledge;
                 var positions = [];
 
-
                 for(var i = 0; i<numberOfPlatforms; i++){
      
                     var position = new worldPosition();
@@ -350,16 +350,20 @@ $(document).ready(function(){
             }
 
             function playerDeath(){
-                lives--;
-                livesText.text = 'Lives: ' + lives;
+                livesplayer1--;
+                livesText.text = 'Lives P1: ' + livesplayer1;
                 player.kill();
-                setTimeout(playerReset, 1000);
+                setTimeout(playerReset, 1500);
+                //player1isDead = true;
+                //inmortalPlayer1();
             }
             function playerDeath2(){
-                lives--;
-                livesText.text = 'Lives: ' + lives;
+                livesplayer2--;
+                livesText2.text = 'Lives P2: ' + livesplayer2;
                 player2.kill();
-                setTimeout(playerReset2, 1000);
+                setTimeout(playerReset2, 1500);
+                //player2isDead = true;
+                //inmortalPlayer2();
             }
 
             function playerReset(){
@@ -393,6 +397,28 @@ $(document).ready(function(){
                 }
             }
 
+            function ballCollidePlayer1(){
+                game.physics.arcade.overlap(balls, player, playerDeath);
+            }
+
+            function ballCollidePlayer2(){
+                game.physics.arcade.overlap(balls, player2, playerDeath2);
+            }
+
+            function inmortalPlayer1(){
+                if (player1isDead){
+                    setTimeout(ballCollidePlayer1, 1000);
+                    player1isDead = false;
+                } 
+            }
+
+            function inmortalPlayer2(){
+                if (player2isDead){
+                    setTimeout(ballCollidePlayer2, 1000);
+                    player2isDead = false;
+                } 
+            }
+            
             
         });
 
