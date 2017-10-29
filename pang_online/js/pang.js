@@ -38,6 +38,9 @@ $(document).ready(function(){
                 var ceil = platforms.create(0, 0, 'ground');
                 ground.scale.setTo(4, 2);
                 ceil.scale.setTo(4,2);
+
+                generatePlatforms();
+
  
                 ground.body.immovable = true;
                 ceil.body.immovable = true;
@@ -118,7 +121,7 @@ $(document).ready(function(){
                 balls = game.add.group();
                 //ball = game.add.sprite(400, 200, 'ball');
                 ball = balls.create(400,200, 'ball');
-                game.physics.enable(ball, Phaser.Physics.ARCADE);
+                game.physics.enable(balls, Phaser.Physics.ARCADE);
 
 
                 //  This gets it moving
@@ -280,9 +283,62 @@ $(document).ready(function(){
             }
 
             function killLongBullet(bullet, platform){
-                if(platform.y<10){
+                if(platform.y<game.world.height-100){
                     bullet.kill();
                     firing = false;
+                }
+            }
+
+            function generatePlatforms(){
+                var numberOfPlatforms = Math.floor(Math.random()* 3) +1;
+                var ledge;
+                var positions = [];
+
+
+                for(var i = 0; i<numberOfPlatforms; i++){
+     
+                    var position = new worldPosition();
+
+                    if(positions.length<=0){
+                        positions.push(position);
+                    }
+                    else{
+                        var tooClose = true;
+                        while(tooClose){
+                            tooClose = false;
+                            for(var j = 0; j<positions.length; j++){
+                                var funcRet = position.checkPosition(positions[j]);
+                                if(!tooClose){
+                                    tooClose = funcRet;
+                                }
+                            }
+                            console.log("a");
+                        }
+                        positions.push(position);
+                    }
+
+                    var scaleX = Math.random() * ((0.7 - 0.5) + 0.3).toFixed(2);
+
+                    ledge = platforms.create(position.x, position.y, 'ground');
+                    ledge.scale.setTo(scaleX, 1);
+                    ledge.body.immovable = true;
+
+                }
+
+            }
+
+            function worldPosition (){
+                this.x = Math.floor(Math.random() *  game.world.width);
+                this.y =Math.floor(Math.random() * (game.world.height - game.world.height/2)) + game.world.height/4;
+                this.checkPosition = function(pos){
+                    if(this.y<(pos.y+50) && this.y>(pos.y-50) && this.x<(pos.x+200) && this.x>(pos.x-200)){
+                        this.x =  Math.floor(Math.random() *  game.world.width);
+                        this.y = Math.floor(Math.random() * (game.world.height - game.world.height/2)) + game.world.height/4;
+                       return true;
+                    }
+                    else{
+                        return false;
+                    }
                 }
             }
 
