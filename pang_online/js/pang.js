@@ -152,11 +152,11 @@ $(document).ready(function(){
         ball.size = 4;
 
         //Score
-        scoreText1 = game.add.text(16, 16, 'Score p1: 0', { fontSize: '32px', fill: '#000' });
-        scoreText2 = game.add.text(350, 16, 'Score p2: 0', { fontSize: '32px', fill: '#000' });
+        scoreText1 = game.add.text(16, 20, 'Score P1: 0', { fontSize: '32px', fill: '#FFFFFF' });
+        scoreText2 = game.add.text(350, 20, 'Score P2: 0', { fontSize: '32px', fill: '#FFFFFF' });
         //Lives
-        livesText = game.add.text(0, 550, 'Lives P1: ' + livesplayer1, { fontSize: '32px', fill: '#000' });
-        livesText2 = game.add.text(400, 550, 'Lives P2: ' + livesplayer2, { fontSize: '32px', fill: '#000' });
+        livesText = game.add.text(0, 550, 'Lives P1: ' + livesplayer1, { fontSize: '32px', fill: '#FFFFFF' });
+        livesText2 = game.add.text(400, 550, 'Lives P2: ' + livesplayer2, { fontSize: '32px', fill: '#FFFFFF' });
         
     }
 
@@ -416,8 +416,8 @@ $(document).ready(function(){
 
     function showGameOverText(){
         var gameoverbackground = game.add.sprite(0, 0, 'gameover');
-        var stateText = game.add.text(game.world.width/2-130, game.world.height/2-50, 'GAME OVER', { fontSize: '40px', fill: '#FE0000' });
-        var stateText2 = game.add.text(game.world.width/2-130, game.world.height/2, 'Volviendo a menú en 3, 2, 1...', { fontSize: '20px', fill: '#FE0000' });
+        var stateText = game.add.text(game.world.width/2-130, game.world.height/2-50, 'GAME OVER', { fontSize: '40px', fill: '#420B3E' });
+        var stateText2 = game.add.text(game.world.width/2-130, game.world.height/2, 'Volviendo a menú en 3, 2, 1...', { fontSize: '20px', fill: '#420B3E' });
     }
 
     function gameOver(){
