@@ -80,7 +80,7 @@ $(document).ready(function(){
                 player.animations.add('moveleft', [0, 1, 2, 3], 10, true);
                 player.animations.add('moveright', [13, 14, 15, 16], 10, true);
                 
-                player2 = game.add.sprite(32, game.world.height-150, 'dude');
+                player2 = game.add.sprite(game.world.width-100, game.world.height-150, 'dude');
                 game.physics.arcade.enable(player2);
 
                 player2.body.bounce.y = 0.1;
