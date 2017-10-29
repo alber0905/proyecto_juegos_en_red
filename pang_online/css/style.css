@@ -2,6 +2,10 @@
     margin: 30px;
 }
 
+.margin_top_40{
+    margin-top: 40px;
+}
+
 .game_canvas{
     width: 600px;
     height: 600px;
@@ -9,6 +13,10 @@
     -webkit-box-shadow: -2px -2px 36px 0px rgba(255, 0, 0, 0.69);
     -moz-box-shadow: -2px -2px 36px 0px rgba(255, 0, 0, 0.69);
     box-shadow: -2px -2px 36px 0px rgba(255, 0, 0, 0.69);
+}
+
+.menu_background{
+    background-color: #00BED2;
 }
 
 .text_center{
@@ -21,4 +29,33 @@ body{
 
 .white_text{
     color: rgba(255, 0, 0, 0.69);
+}
+
+.menu_buttons div{
+    width:100%;
+    text-align: center;
+}
+
+.menu_buttons button{
+    width:40%;
+    cursor: pointer;
+}
+
+.menu_buttons button:hover{
+    background-color: rgba(255, 0, 0, 0.69);
+}
+
+.menu_buttons{
+    padding-top: 50%;
+    transform: translateY(-30%);
+    display: grid;
+    font-family: Lucida Console;
+}
+.menu_buttons a:hover{
+    text-decoration: none;
+    color: initial;
+}
+
+.menu_buttons a{
+    color: initial;
 }
