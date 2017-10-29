@@ -22,3 +22,7 @@
 ##Trello
     https://trello.com/b/yFTcqMEk/juegos-en-red
 
+
+##Sprites
+https://www.spriters-resource.com/arcade/superpang/
+
