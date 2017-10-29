@@ -12,6 +12,8 @@ $(document).ready(function(){
     var scoreplayer2 = 0;
     var newball = true;
     var tiempobolas = 20000;
+    var powerup1 = false;
+    var powerup2 = false;
     function preload(){
     game.load.image('sky', 'assets/sky.png');
     game.load.image('ground', 'assets/platform.png');
@@ -197,8 +199,9 @@ $(document).ready(function(){
         game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
         game.physics.arcade.collide(bullets2, platforms, killLongBullet2, null, this);
         game.physics.arcade.overlap(balls, bullets2, collisionBall2, null, this);
-        game.physics.arcade.overlap(powerups, player, getPowerUp);
-        
+        game.physics.arcade.overlap(powerups, player, getPowerUp,null,this);
+        game.physics.arcade.overlap(powerups, player2, getPowerUp2,null,this);
+
         if (!player1isDead){
             game.physics.arcade.overlap(balls, player, playerDeath);    
         }
@@ -260,11 +263,19 @@ $(document).ready(function(){
     }
 
     function fireBullet(){
-            bullet = bullets.getFirstExists(false);
-            if(bullet){
-                bullet.reset(player.x, player.y);
-                bullet.body.velocity.y = -300;
-            }
+        var bullet = bullets.getFirstExists(false);
+        if(bullet){
+            bullet.reset(player.x, player.y);
+            bullet.body.velocity.y = -300;
+        }
+    }
+
+    function fireBullet2(){
+        var bullet2 = bullets2.getFirstExists(false);
+        if(bullet2){
+            bullet2.reset(player2.x, player2.y);
+            bullet2.body.velocity.y = -300;
+        }
     }
 
     function resetBullet(bullet){
@@ -275,17 +286,31 @@ $(document).ready(function(){
     }
 
     function fireLongBullet(){
-        if(!firing){
-            firing = true;
-            long_bullet_instance.reset(player.x, player.y);
-            long_bullet_instance.body.velocity.y = -200;
+        if(powerup1){
+            if(!player1isDead){
+                fireBullet();
+            }
+        }
+        else{
+            if(!firing){
+                firing = true;
+                long_bullet_instance.reset(player.x, player.y);
+                long_bullet_instance.body.velocity.y = -200;
+            }
         }
     }
     function fireLongBullet2(){
-        if(!firing2){
-            firing2 = true;
-            long_bullet_instance2.reset(player2.x, player2.y);
-            long_bullet_instance2.body.velocity.y = -200;
+        if(powerup2){
+            if(!player2isDead){
+                fireBullet2();
+            }
+        }
+        else{
+            if(!firing2){
+                firing2 = true;
+                long_bullet_instance2.reset(player2.x, player2.y);
+                long_bullet_instance2.body.velocity.y = -200;
+            }
         }
     }
 
@@ -454,7 +479,7 @@ $(document).ready(function(){
     
     function generatePowerUp(ball){
         var num = Math.floor((Math.random() * 10) + 1);
-        if (num > 2){
+        if (num > 7 ){
             var powerup = powerups.create(ball.position.x, ball.position.y, 'star');
             game.physics.arcade.enable(powerup);
             powerup.body.gravity.y = 100;
@@ -463,8 +488,21 @@ $(document).ready(function(){
     }
 
     //
-    function getPowerUp(){
-        
+    function getPowerUp(p,pow){
+        powerup1 = true;
+        pow.kill();
+        setTimeout(unablePowerUp1,10000);
+    }
+    function getPowerUp2(p,pow2){
+        powerup2 = true;
+        pow2.kill();
+        setTimeout(unablePowerUp2,10000);
+    }
+    function unablePowerUp1(){
+        powerup1 = false;
+    }
+    function unablePowerUp2(){
+        powerup2 = false;
     }
     
 });
