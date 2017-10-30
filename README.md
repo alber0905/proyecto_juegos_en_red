@@ -54,7 +54,7 @@ Además de estos elementos, existen dos tipos de balas:
 Aquí es donde se implementará la leaderboard cuando se implemente el servidor. De momento los datos están grabados
 en el propio HTML.
 
-![alt text](/pang_online/screenshots/puntuaciones.png)
+![alt text](/pang_online/screenshots/puntuacion.png)
 
 ## Diagrama de Flujo
 
