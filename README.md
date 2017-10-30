@@ -36,7 +36,7 @@ Está implementada con una página HTML, ayudado con estilos de css y bootstrap.
 
 ### Pantalla buscar sala 
 Aquí es donde un jugador podrá crear una partida online, o unirse a la de otro (ahora mismo no hacen nada los botones).
-![alt text](/pang_online/screenshots/seleccionarsala.png)
+![alt text](/pang_online/screenshots/seleccionsala.png)
 
 ### Pantalla de juego
 Es la pantalla en la que transcurre el tiempo de juego. Está implementada mediante Phaser en el archivo pang.js.
