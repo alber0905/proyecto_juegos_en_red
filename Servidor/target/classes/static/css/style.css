@@ -1,0 +1,106 @@
+.margin-30{
+    margin: 30px;
+}
+
+.margin_top_40{
+    margin-top: 40px;
+}
+.padding_top_20{
+    padding-top: 20px;
+}
+
+.game_canvas{
+    position: fixed; /* or absolute */
+    top: 15%;
+    left: 35%;
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+    -webkit-box-shadow: -2px -2px 36px 0px rgba(156, 18, 184, 0.69);
+    -moz-box-shadow: -2px -2px 36px 0px rgba(156, 18, 184, 0.69);
+    box-shadow: -2px -2px 36px 0px rgba(156, 18, 184, 0.69);
+}
+
+.menu_background{
+    background-color: #BC9DDB;
+    opacity: 0.7;
+}
+
+.text_center{
+    text-align: center;
+}
+
+body{
+    background-image: url("background.jpg");
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+}
+
+.white_text{
+    color: rgba(255, 0, 0, 0.69);
+}
+
+.menu_buttons div{
+    width:100%;
+    text-align: center;
+}
+
+.menu_buttons button{
+    width:40%;
+    cursor: pointer;
+}
+
+.leaderboar_btn{
+    cursor:pointer;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+
+.leaderboar_btn:hover{
+    background-color: rgba(66, 11, 62, 0.99);
+}
+
+
+.menu_buttons button:hover{
+    background-color: rgba(66, 11, 62, 0.99);
+}
+
+.menu_buttons{
+    padding-top: 50%;
+    transform: translateY(-30%);
+    display: grid;
+    font-family: Lucida Console;
+}
+.menu_buttons a:hover{
+    text-decoration: none;
+    color: initial;
+}
+
+.menu_buttons a{
+    color: initial;
+}
+
+.relative{
+    position:relative;
+}
+
+.table{
+    display: table;
+    margin: 30px;
+    font-family: Lucida Console;
+
+}
+
+.table_row{
+    display:table-row;
+}
+
+.table_cell{
+    display:table-cell;
+}
+
+.margin_0{
+    margin: 0 !important;
+}
