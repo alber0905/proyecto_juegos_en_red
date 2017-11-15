@@ -12,6 +12,15 @@
     </head>
 
     <body>
+        <script>
+           $.ajax({
+            method: "GET",
+            url:"/GePuntuaciones/",                
+            contentType:"application/json",
+            dataType:"json"            
+            }).done(function(data){
+            });
+        </script>
             <div id ="prueba" class = "game_canvas menu_background  ">
                 <h3 class="text_center white_text padding_top_20">PUNTUACIONES</h3>
 
