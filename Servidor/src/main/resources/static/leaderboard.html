@@ -9,18 +9,10 @@
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src ="js/popper.js"></script>  
         <script src ="js/bootstrap.min.js"></script>
+        <script src ="js/puntuaciones.js"></script>
     </head>
 
     <body>
-        <script>
-           $.ajax({
-            method: "GET",
-            url:"/GePuntuaciones/",                
-            contentType:"application/json",
-            dataType:"json"            
-            }).done(function(data){
-            });
-        </script>
             <div id ="prueba" class = "game_canvas menu_background  ">
                 <h3 class="text_center white_text padding_top_20">PUNTUACIONES</h3>
 
@@ -31,31 +23,8 @@
                         <div class="table_cell">NOMBRE</div>
                 </div>
 
-                <br>
-
-                <div class="table_row">
-                    <div class="table_cell">1.</div>
-                    <div class="table_cell">1000</div>
-                    <div class="table_cell">AAA</div>
-                </div>
-
-                <div class="table_row">
-                    <div class="table_cell">2.</div>
-                    <div class="table_cell">980</div>
-                    <div class="table_cell">BBB</div>
-                </div>
-
-                <div class="table_row">
-                        <div class="table_cell">3.</div>
-                        <div class="table_cell">970</div>
-                        <div class="table_cell">CCC</div>
-                </div>
-
-                <div class="table_row">
-                        <div class="table_cell">4.</div>
-                        <div class="table_cell">400</div>
-                        <div class="table_cell">DDD</div>
-                </div>
+                <br class="punt_break">
+                
                 </div>
 
                 <a href="index.html">
@@ -64,6 +33,13 @@
                     </button>
                 </a>
             </div>
+            <script type="text/template" class="jqPuntTemplate">
+                <div class="table_row">
+                    <div class="table_cell">%INDEX%</div>
+                    <div class="table_cell">%PUNT%</div>
+                    <div class="table_cell">%NAME%</div>
+                </div>
+            </script>
 
     </body>
 </html>
