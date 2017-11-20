@@ -1,8 +1,1 @@
-[{
-    "puntuacion": 1000,
-    "nombre": "AAA"
-},
-{
-    "puntuacion": 300,
-    "nombre": "BBB"
-}]
+[{"puntuacion":1000,"nombre":"AAA"},{"puntuacion":300,"nombre":"BBB"},{"puntuacion":220,"nombre":"Paca"},{"puntuacion":50,"nombre":"Jesus"},{"puntuacion":50,"nombre":"Jesus"},{"puntuacion":50,"nombre":"Jesus"},{"puntuacion":50,"nombre":"Jesus"},{"puntuacion":50,"nombre":"Jesus"},{"puntuacion":50,"nombre":"Jesus"},{"puntuacion":50,"nombre":"Jesus"}]

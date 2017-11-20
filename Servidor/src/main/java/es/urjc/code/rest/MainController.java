@@ -27,14 +27,22 @@ public class MainController {
         @ResponseStatus(HttpStatus.CREATED)
 	public List<Puntuacion> anuncios(@RequestBody Puntuacion newPunt) throws IOException {
             BufferedReader reader = new BufferedReader(new FileReader("./src/main/resources/static/json_files/Puntuacion.json"));
-
+            
+            
             Gson gson = new GsonBuilder().create();
 //            gson.toJson("Hello", writer);
 //            gson.toJson(345, writer);
             java.lang.reflect.Type listType = new TypeToken<List<Puntuacion>>(){}.getType();
             List<Puntuacion> puntuaciones = gson.fromJson(reader, listType);
-
+            puntuaciones = newPunt.meterPuntuacion(puntuaciones);
             reader.close();
+            
+            FileWriter fileWriter = new FileWriter("./src/main/resources/static/json_files/Puntuacion.json");
+            String jsonString = gson.toJson(puntuaciones);
+            fileWriter.write(jsonString);
+            fileWriter.close();
+            
+            
 		return puntuaciones;
 	}
         

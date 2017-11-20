@@ -15,13 +15,12 @@
         <script>
            $.ajax({
             method: "POST",
-            url:"/anuncios/",                
+            url:"/UpdatePuntuaciones/",                
             contentType:"application/json",
             dataType:"json",
             data:JSON.stringify({
-                "name": "Jesus",
-                "asunto": "Prueba ajax",
-                "descripcion":"sfjoids"
+                "punt": "220",
+                "name": "Paca"
             })
         }).done(function(data){
             alert(JSON.stringify(data));
