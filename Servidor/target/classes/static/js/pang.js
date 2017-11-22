@@ -447,8 +447,12 @@ $(document).ready(function(){
 
     function gameOver(){
         if (livesplayer1<=0 && livesplayer2<=0){
-            showGameOverText();
-            setTimeout(redireccionarAMenu, 3000);
+            //showGameOverText();
+            //setTimeout(redireccionarAMenu, 3000);
+            $(".end_game_form").removeClass("hidden");
+            $(".jqSubmitPunt").on("click", function(){
+                
+            })
             
         }
     }
