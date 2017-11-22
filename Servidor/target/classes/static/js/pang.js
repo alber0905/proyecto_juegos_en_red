@@ -444,15 +444,32 @@ $(document).ready(function(){
         var stateText = game.add.text(game.world.width/2-130, game.world.height/2-50, 'GAME OVER', { fontSize: '40px', fill: '#420B3E' });
         var stateText2 = game.add.text(game.world.width/2-130, game.world.height/2, 'Volviendo a menú en 3, 2, 1...', { fontSize: '20px', fill: '#420B3E' });
     }
-
+    var sent = false;
     function gameOver(){
         if (livesplayer1<=0 && livesplayer2<=0){
             //showGameOverText();
             //setTimeout(redireccionarAMenu, 3000);
-            $(".end_game_form").removeClass("hidden");
-            $(".jqSubmitPunt").on("click", function(){
-                
-            })
+            if(!sent){
+                game.input.keyboard.removeKey(Phaser.Keyboard.A);
+                game.input.keyboard.removeKey(Phaser.Keyboard.D);
+                game.input.keyboard.removeKey(Phaser.Keyboard.W);
+                $(".end_game_form").removeClass("hidden");
+                $(".jqSubmitPunt").on("click", function(){
+                    $.ajax({
+                        method: "POST",
+                        url:"/UpdatePuntuaciones/",                
+                        contentType:"application/json",
+                        dataType:"json",
+                        data:JSON.stringify({
+                            "punt": scoreplayer1,
+                            "name": $("#punt_input").val()
+                        })
+                    }).done(function(data){                   
+                        window.location.replace("leaderboard.html");
+                    }); 
+                });
+                sent = true;
+            }
             
         }
     }
