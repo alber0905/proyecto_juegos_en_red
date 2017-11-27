@@ -1,0 +1,45 @@
+<!DOCTYPE html> 
+
+<html lang="es"> 
+    <head> 
+	    <meta charset="UTF-8" />
+        <title>pang - Getting started</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">    
+        <link rel="stylesheet" type="text/css" href="css/style.css">    
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src ="js/popper.js"></script>  
+        <script src ="js/bootstrap.min.js"></script>
+        <script src ="js/puntuaciones.js"></script>
+    </head>
+
+    <body>
+            <div id ="prueba" class = "game_canvas menu_background  ">
+                <h3 class="text_center white_text padding_top_20">PUNTUACIONES</h3>
+
+                <div class="table">
+                    <div class="table_row">
+                        <div class="table_cell">POSICIÓN</div>
+                        <div class="table_cell">PUNTUACIÓN</div>
+                        <div class="table_cell">NOMBRE</div>
+                </div>
+
+                <br class="punt_break">
+                
+                </div>
+
+                <a href="index.html">
+                    <button class="btn-lg leaderboar_btn">
+                        ATRAS
+                    </button>
+                </a>
+            </div>
+            <script type="text/template" class="jqPuntTemplate">
+                <div class="table_row">
+                    <div class="table_cell">%INDEX%</div>
+                    <div class="table_cell">%PUNT%</div>
+                    <div class="table_cell">%NAME%</div>
+                </div>
+            </script>
+
+    </body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html> 
+
+<html lang="es"> 
+    <head> 
+	    <meta charset="UTF-8" />
+        <title>pang - Getting started</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">    
+        <link rel="stylesheet" type="text/css" href="css/style.css">    
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <script src ="js/popper.js"></script>  
+        <script src ="js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <script>
+           $.ajax({
+            method: "POST",
+            url:"/UpdatePuntuaciones/",                
+            contentType:"application/json",
+            dataType:"json",
+            data:JSON.stringify({
+                "punt": "220",
+                "name": "Paca"
+            })
+        }).done(function(data){
+            alert(JSON.stringify(data));
+        }); 
+        </script>
+    </body>
+</html>

@@ -446,7 +446,7 @@ $(document).ready(function(){
     }
 
     function gameOver(){
-        if (livesplayer1==0 && livesplayer2==0){
+        if (livesplayer1<=0 && livesplayer2<=0){
             showGameOverText();
             setTimeout(redireccionarAMenu, 3000);
             
