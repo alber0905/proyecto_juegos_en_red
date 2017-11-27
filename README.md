@@ -65,3 +65,9 @@ en el propio HTML.
 En verde está el @Controller, en azul el @service y en rojo el archivo js que utiliza la API REST.
 
 ![alt text](/pang_online/screenshots/Diagrama_de_clases_server.png)
+
+## Guia para la ejecucción del programa
+
+Ejecutar el servidor en Servidor/target/Server-0.0.1-SNAPSHOT.jar
+
+Para entrar en la página, escribir la url localhost:8090
