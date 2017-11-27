@@ -68,6 +68,8 @@ En verde está el @Controller, en azul el @service y en rojo el archivo js que u
 
 ## Guia para la ejecucción del programa
 
+Instalar Java Se
+
 Ejecutar el servidor en Servidor/target/Server-0.0.1-SNAPSHOT.jar
 
 Para entrar en la página, escribir la url localhost:8090
