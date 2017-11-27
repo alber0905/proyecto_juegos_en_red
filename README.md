@@ -60,3 +60,8 @@ en el propio HTML.
 
 ![alt text](/pang_online/screenshots/Diagrama_de_flujo.png)
 
+## Diagrama de clases del servidor
+
+En verde está el @Controller, en azul el @service y en rojo el archivo js que utiliza la API REST.
+
+![alt text](/pang_online/screenshots/Diagrama_de_clases_server.png)
