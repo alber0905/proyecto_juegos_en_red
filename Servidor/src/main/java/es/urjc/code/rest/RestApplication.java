@@ -19,7 +19,7 @@ public class RestApplication implements WebSocketConfigurer{
         
         @Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(createChatHandler(), "/chat")
+		registry.addHandler(createChatHandler(), "/updatePlayer2")
 			.setAllowedOrigins("*");
 	}
 	
