@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="es.urjc.code.rest.RestEjem1bApplicationTests" time="0.031" tests="1" errors="1" skipped="0" failures="0">
+<testsuite name="es.urjc.code.rest.RestEjem1bApplicationTests" time="0.015" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
-    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_151\jre\bin"/>
-    <property name="java.vm.version" value="25.151-b12"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_144\jre\bin"/>
+    <property name="java.vm.version" value="25.144-b01"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=";"/>
@@ -15,12 +15,12 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="D:\git\proyecto_juegos_en_red\Servidor"/>
-    <property name="java.runtime.version" value="1.8.0_151-b12"/>
+    <property name="user.dir" value="C:\xampp\htdocs\dashboard\Git\proyecto_juegos_en_red\Servidor"/>
+    <property name="java.runtime.version" value="1.8.0_144-b01"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_151\jre\lib\endorsed"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_144\jre\lib\endorsed"/>
     <property name="os.arch" value="amd64"/>
-    <property name="java.io.tmpdir" value="C:\Users\ALBETO~1\AppData\Local\Temp\"/>
+    <property name="java.io.tmpdir" value="C:\Users\jetes\AppData\Local\Temp\"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
@@ -28,29 +28,29 @@
     <property name="maven.ext.class.path" value="C:\Program Files\NetBeans 8.2\java\maven-nblib\netbeans-eventspy.jar"/>
     <property name="classworlds.conf" value="C:\Program Files\NetBeans 8.2\java\maven\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_151\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\GitExtensions\;C:\Users\Albeto Blanco\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_144\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v9.0\libnvvp;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\jetes\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\GitExtensions\;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Users\jetes\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="os.version" value="10.0"/>
-    <property name="user.home" value="C:\Users\Albeto Blanco"/>
+    <property name="user.home" value="C:\Users\jetes"/>
     <property name="user.timezone" value="Europe/Paris"/>
     <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
     <property name="java.specification.version" value="1.8"/>
     <property name="file.encoding" value="UTF-8"/>
-    <property name="user.name" value="Albeto Blanco"/>
+    <property name="user.name" value="jetes"/>
     <property name="java.class.path" value="C:\Program Files\NetBeans 8.2\java\maven\boot\plexus-classworlds-2.4.jar"/>
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_151\jre"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_144\jre"/>
     <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans 8.2\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 install"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="es"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
     <property name="java.vm.info" value="mixed mode"/>
-    <property name="java.version" value="1.8.0_151"/>
-    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_151\jre\lib\ext;C:\WINDOWS\Sun\Java\lib\ext"/>
-    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_151\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_151\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_151\jre\classes"/>
+    <property name="java.version" value="1.8.0_144"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_144\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_144\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_144\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_144\jre\classes"/>
     <property name="java.vendor" value="Oracle Corporation"/>
     <property name="maven.home" value="C:\Program Files\NetBeans 8.2\java\maven"/>
     <property name="file.separator" value="\"/>
@@ -60,84 +60,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="initializationError" classname="es.urjc.code.rest.RestEjem1bApplicationTests" time="0.031">
-    <error message="Found multiple @SpringBootConfiguration annotated classes [Generic bean: class [es.urjc.code.rest.RestApplication]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\RestApplication.class], Generic bean: class [es.urjc.code.rest.WsEjer2Application]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\WsEjer2Application.class]]" type="java.lang.IllegalStateException"><![CDATA[java.lang.IllegalStateException: Found multiple @SpringBootConfiguration annotated classes [Generic bean: class [es.urjc.code.rest.RestApplication]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\RestApplication.class], Generic bean: class [es.urjc.code.rest.WsEjer2Application]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\WsEjer2Application.class]]
-	at org.springframework.util.Assert.state(Assert.java:392)
-	at org.springframework.boot.test.context.SpringBootConfigurationFinder.scanPackage(SpringBootConfigurationFinder.java:69)
-	at org.springframework.boot.test.context.SpringBootConfigurationFinder.findFromPackage(SpringBootConfigurationFinder.java:59)
-	at org.springframework.boot.test.context.SpringBootConfigurationFinder.findFromClass(SpringBootConfigurationFinder.java:52)
-	at org.springframework.boot.test.context.SpringBootTestContextBootstrapper.getOrFindConfigurationClasses(SpringBootTestContextBootstrapper.java:172)
-	at org.springframework.boot.test.context.SpringBootTestContextBootstrapper.processMergedContextConfiguration(SpringBootTestContextBootstrapper.java:133)
-	at org.springframework.test.context.support.AbstractTestContextBootstrapper.buildMergedContextConfiguration(AbstractTestContextBootstrapper.java:409)
-	at org.springframework.test.context.support.AbstractTestContextBootstrapper.buildDefaultMergedContextConfiguration(AbstractTestContextBootstrapper.java:323)
-	at org.springframework.test.context.support.AbstractTestContextBootstrapper.buildMergedContextConfiguration(AbstractTestContextBootstrapper.java:277)
-	at org.springframework.test.context.support.AbstractTestContextBootstrapper.buildTestContext(AbstractTestContextBootstrapper.java:112)
-	at org.springframework.boot.test.context.SpringBootTestContextBootstrapper.buildTestContext(SpringBootTestContextBootstrapper.java:78)
-	at org.springframework.test.context.TestContextManager.<init>(TestContextManager.java:120)
-	at org.springframework.test.context.TestContextManager.<init>(TestContextManager.java:105)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTestContextManager(SpringJUnit4ClassRunner.java:152)
-	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.<init>(SpringJUnit4ClassRunner.java:143)
-	at org.springframework.test.context.junit4.SpringRunner.<init>(SpringRunner.java:49)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
-	at org.junit.internal.builders.AnnotatedBuilder.buildRunner(AnnotatedBuilder.java:104)
-	at org.junit.internal.builders.AnnotatedBuilder.runnerForClass(AnnotatedBuilder.java:86)
-	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:59)
-	at org.junit.internal.builders.AllDefaultPossibilitiesBuilder.runnerForClass(AllDefaultPossibilitiesBuilder.java:26)
-	at org.junit.runners.model.RunnerBuilder.safeRunnerForClass(RunnerBuilder.java:59)
-	at org.junit.internal.requests.ClassRequest.getRunner(ClassRequest.java:33)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:283)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:173)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:153)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:128)
-	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:203)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:155)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:103)
-]]></error>
-    <system-out><![CDATA[12:17:22.103 [main] DEBUG org.springframework.test.context.junit4.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class es.urjc.code.rest.RestEjem1bApplicationTests]
-12:17:22.150 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
-12:17:22.306 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-12:17:22.383 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [es.urjc.code.rest.RestEjem1bApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
-12:17:22.446 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [es.urjc.code.rest.RestEjem1bApplicationTests], using SpringBootContextLoader
-12:17:22.461 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [es.urjc.code.rest.RestEjem1bApplicationTests]: class path resource [es/urjc/code/rest/RestEjem1bApplicationTests-context.xml] does not exist
-12:17:22.461 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [es.urjc.code.rest.RestEjem1bApplicationTests]: class path resource [es/urjc/code/rest/RestEjem1bApplicationTestsContext.groovy] does not exist
-12:17:22.461 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [es.urjc.code.rest.RestEjem1bApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
-12:17:22.461 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [es.urjc.code.rest.RestEjem1bApplicationTests]: RestEjem1bApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-12:17:22.618 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [es.urjc.code.rest.RestEjem1bApplicationTests]
-12:17:22.821 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
-12:17:22.821 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
-12:17:22.821 [main] DEBUG org.springframework.core.env.StandardEnvironment - Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
-12:17:22.868 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved classpath location [es/urjc/code/rest/] to resources [URL [file:/D:/git/proyecto_juegos_en_red/Servidor/target/test-classes/es/urjc/code/rest/], URL [file:/D:/git/proyecto_juegos_en_red/Servidor/target/classes/es/urjc/code/rest/]]
-12:17:22.868 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [D:\git\proyecto_juegos_en_red\Servidor\target\test-classes\es\urjc\code\rest]
-12:17:22.868 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [D:\git\proyecto_juegos_en_red\Servidor\target\test-classes\es\urjc\code\rest] for files matching pattern [D:/git/proyecto_juegos_en_red/Servidor/target/test-classes/es/urjc/code/rest/*.class]
-12:17:22.883 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest]
-12:17:22.883 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest] for files matching pattern [D:/git/proyecto_juegos_en_red/Servidor/target/classes/es/urjc/code/rest/*.class]
-12:17:22.899 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved location pattern [classpath*:es/urjc/code/rest/*.class] to resources [file [D:\git\proyecto_juegos_en_red\Servidor\target\test-classes\es\urjc\code\rest\RestEjem1bApplicationTests.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\ChatHandler.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\MainController$1.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\MainController$2.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\MainController.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\Puntuacion.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\RestApplication.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\WsEjer2Application.class]]
-12:17:23.165 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\RestApplication.class]
-12:17:23.196 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\WsEjer2Application.class]
-12:17:23.211 [main] DEBUG org.springframework.test.context.junit4.SpringJUnit4ClassRunner - SpringJUnit4ClassRunner constructor called with [class es.urjc.code.rest.RestEjem1bApplicationTests]
-12:17:23.211 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
-12:17:23.211 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
-12:17:23.211 [main] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [es.urjc.code.rest.RestEjem1bApplicationTests] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
-12:17:23.211 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [es.urjc.code.rest.RestEjem1bApplicationTests], using SpringBootContextLoader
-12:17:23.211 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [es.urjc.code.rest.RestEjem1bApplicationTests]: class path resource [es/urjc/code/rest/RestEjem1bApplicationTests-context.xml] does not exist
-12:17:23.211 [main] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [es.urjc.code.rest.RestEjem1bApplicationTests]: class path resource [es/urjc/code/rest/RestEjem1bApplicationTestsContext.groovy] does not exist
-12:17:23.211 [main] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [es.urjc.code.rest.RestEjem1bApplicationTests]: no resource found for suffixes {-context.xml, Context.groovy}.
-12:17:23.211 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [es.urjc.code.rest.RestEjem1bApplicationTests]: RestEjem1bApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-12:17:23.227 [main] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [es.urjc.code.rest.RestEjem1bApplicationTests]
-12:17:23.227 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemProperties] PropertySource with lowest search precedence
-12:17:23.227 [main] DEBUG org.springframework.core.env.StandardEnvironment - Adding [systemEnvironment] PropertySource with lowest search precedence
-12:17:23.243 [main] DEBUG org.springframework.core.env.StandardEnvironment - Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
-12:17:23.243 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved classpath location [es/urjc/code/rest/] to resources [URL [file:/D:/git/proyecto_juegos_en_red/Servidor/target/test-classes/es/urjc/code/rest/], URL [file:/D:/git/proyecto_juegos_en_red/Servidor/target/classes/es/urjc/code/rest/]]
-12:17:23.243 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [D:\git\proyecto_juegos_en_red\Servidor\target\test-classes\es\urjc\code\rest]
-12:17:23.243 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [D:\git\proyecto_juegos_en_red\Servidor\target\test-classes\es\urjc\code\rest] for files matching pattern [D:/git/proyecto_juegos_en_red/Servidor/target/test-classes/es/urjc/code/rest/*.class]
-12:17:23.243 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Looking for matching resources in directory tree [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest]
-12:17:23.243 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Searching directory [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest] for files matching pattern [D:/git/proyecto_juegos_en_red/Servidor/target/classes/es/urjc/code/rest/*.class]
-12:17:23.243 [main] DEBUG org.springframework.core.io.support.PathMatchingResourcePatternResolver - Resolved location pattern [classpath*:es/urjc/code/rest/*.class] to resources [file [D:\git\proyecto_juegos_en_red\Servidor\target\test-classes\es\urjc\code\rest\RestEjem1bApplicationTests.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\ChatHandler.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\MainController$1.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\MainController$2.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\MainController.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\Puntuacion.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\RestApplication.class], file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\WsEjer2Application.class]]
-12:17:23.274 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\RestApplication.class]
-12:17:23.274 [main] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [D:\git\proyecto_juegos_en_red\Servidor\target\classes\es\urjc\code\rest\WsEjer2Application.class]
-]]></system-out>
-  </testcase>
+  <testcase name="contextLoads" classname="es.urjc.code.rest.RestEjem1bApplicationTests" time="0.015"/>
 </testsuite>
