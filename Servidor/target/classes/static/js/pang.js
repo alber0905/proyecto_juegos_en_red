@@ -1,5 +1,6 @@
 $(document).ready(function(){
     var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
+    var connection = new WebSocket('ws://'+ window.location.host +'/updatePlayer2');
     var platforms;
     var player;
     var livesplayer1 = 3;
@@ -189,6 +190,7 @@ $(document).ready(function(){
     }
 
     function update(){
+        var currentPlayerAnimation = "stop";
         //la función de abajo hace que acabe la partida pero no sale bien el texto
         gameOver();
         var hitPlatform = game.physics.arcade.collide(player, platforms);
@@ -221,6 +223,7 @@ $(document).ready(function(){
         if(cursors.left.isDown){
             player.body.velocity.x = -150;
             player.animations.play('moveleft');
+            currentPlayerAnimation = 'moveleft';
             if(player.position.x == 0 ){
                 player.position.x = game.world.width;
             }
@@ -228,6 +231,7 @@ $(document).ready(function(){
         else if(cursors.right.isDown){
             player.body.velocity.x = 150;
             player.animations.play('moveright');
+            currentPlayerAnimation = 'moveright';
             if(player.position.x >= game.world.width-40){
                 player.position.x = 0;
             }   
@@ -237,6 +241,18 @@ $(document).ready(function(){
             player.animations.stop();
             player.frame = 4;
         } 
+
+        var webSocketData =JSON.stringify({
+            position:{
+                x: player.position.x,
+                y: player.position.y
+            },
+            isShooting: false,
+            powerUp: powerup1,
+            animation: currentPlayerAnimation
+        });
+        connection.send(webSocketData);
+
 
         player2.body.velocity.x = 0;
         if(cursors2[0].isDown){
@@ -257,10 +273,33 @@ $(document).ready(function(){
         else{
             player2.animations.stop();
             player2.frame = 4;
-        } 
-
-        
+        }
     }
+
+    connection.onmessage = function(data){
+        var parsedData = JSON.parse(data);
+        if(parsedData.animation == 'stop'){
+            player2.animations.stop();
+        }
+        else{
+            player2.animations.play(parsedData.animation);
+        }
+        player2.position.x = parsedData.position.x;
+        player2.position.y = parsedData.position.y;
+        if(player2.position.x >= game.world.width-40){
+            player2.position.x = 0;
+        } 
+        else if(player2.position.x == 0 ){
+            player2.position.x = game.world.width;
+        }
+
+        if(parsedData.isShooting){
+            fireLongBullet2(parsedData.powerUp1);
+        }
+
+    }
+
+
 
     function fireBullet(){
         var bullet = bullets.getFirstExists(false);
@@ -298,9 +337,20 @@ $(document).ready(function(){
                 long_bullet_instance.body.velocity.y = -200;
             }
         }
+
+        var webSocketData =JSON.stringify({
+            position:{
+                x: player.position.x,
+                y: player.position.y
+            },
+            isShooting: true,
+            powerUp: powerup1,
+            animation = currentPlayerAnimation
+        });
+        connection.send(webSocketData);
     }
-    function fireLongBullet2(){
-        if(powerup2){
+    function fireLongBullet2(powerUpSocket){
+        if(powerUpSocket){
             if(!player2isDead){
                 fireBullet2();
             }
