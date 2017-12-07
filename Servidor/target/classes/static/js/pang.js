@@ -1,6 +1,13 @@
 $(document).ready(function(){
     var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
-    var connection = new WebSocket('ws://'+ window.location.host +'/updatePlayer2');
+    var connection = new WebSocket('ws://'+ window.location.host +'/sala');
+    var isSocketOpen = false;
+    connection.onopen = function(){
+        isSocketOpen = true;
+    }
+
+    
+    var currentPlayerAnimation = "stop";
     var platforms;
     var player;
     var livesplayer1 = 3;
@@ -15,6 +22,7 @@ $(document).ready(function(){
     var tiempobolas = 20000;
     var powerup1 = false;
     var powerup2 = false;
+    
     function preload(){
     game.load.image('sky', 'assets/sky.png');
     game.load.image('ground', 'assets/platform.png');
@@ -190,7 +198,6 @@ $(document).ready(function(){
     }
 
     function update(){
-        var currentPlayerAnimation = "stop";
         //la función de abajo hace que acabe la partida pero no sale bien el texto
         gameOver();
         var hitPlatform = game.physics.arcade.collide(player, platforms);
@@ -251,8 +258,10 @@ $(document).ready(function(){
             powerUp: powerup1,
             animation: currentPlayerAnimation
         });
-        connection.send(webSocketData);
 
+        if(isSocketOpen){
+            connection.send(webSocketData);
+        }
 
         player2.body.velocity.x = 0;
         if(cursors2[0].isDown){
@@ -277,7 +286,7 @@ $(document).ready(function(){
     }
 
     connection.onmessage = function(data){
-        var parsedData = JSON.parse(data);
+        var parsedData = JSON.parse(data.data);
         if(parsedData.animation == 'stop'){
             player2.animations.stop();
         }
@@ -345,7 +354,7 @@ $(document).ready(function(){
             },
             isShooting: true,
             powerUp: powerup1,
-            animation = currentPlayerAnimation
+            animation: currentPlayerAnimation
         });
         connection.send(webSocketData);
     }

@@ -61,13 +61,18 @@ public class PangSocketHandler extends TextWebSocketHandler {
 		System.out.println("Message sent: " + node.toString());
 		
 		ObjectNode newNode = mapper.createObjectNode();
-		newNode.put("name", node.get("name").asText());
-		newNode.put("message", node.get("message").asText());
-		
+                ObjectNode positionNode = mapper.createObjectNode();
+                
+                positionNode.put("x", node.get("position").get("x").asText());
+                positionNode.put("y", node.get("position").get("y").asText());
+		newNode.put("position", positionNode.asText());
+		newNode.put("isShooting", node.get("isShooting").asText());
+		newNode.put("powerUp", node.get("powerUp").asText());
+		newNode.put("animation", node.get("animation").asText());
 		
 		for(WebSocketSession participant : sessions.values()) {
-			if(participant.getId().equals(sala.get(id).toString())) {
-				participant.sendMessage(new TextMessage(newNode.toString()));
+			if(participant.getId().equals(sala.get(id).toString()) && participant != session) {
+				participant.sendMessage(new TextMessage(node.toString()));
 			}
 		}
 	}
