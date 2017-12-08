@@ -25,13 +25,16 @@ public class PangSocketHandler extends TextWebSocketHandler {
 		sessions.put(session.getId(), session);
                 int id2 = Integer.parseInt(session.getId());
                 int id1=-1;
+                ObjectNode ready = mapper.createObjectNode();
+                ready.put("isready", "1");
                 
                 for(int participant : sala.keySet()) {
 			if( id1==-1 && sala.get(participant) ==0){
                             sala.replace(participant,id2);
                             sala.put(id2, participant);
                             id1 = participant;
-                            
+                            session.sendMessage(new TextMessage(ready.toString()));
+                            sessions.get(Integer.toString(id1)).sendMessage(new TextMessage(ready.toString()));
                         }
 		}
                 if(id1==-1){
