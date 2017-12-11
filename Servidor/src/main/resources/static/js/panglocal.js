@@ -381,6 +381,8 @@ $(document).ready(function(){
 
     }
 
+    
+
     function worldPosition (){
         this.x = Math.floor(Math.random() *  game.world.width);
         this.y = Math.floor(Math.random() * (game.world.height - game.world.height/2)) + game.world.height/4;

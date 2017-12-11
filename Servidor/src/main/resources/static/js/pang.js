@@ -59,7 +59,7 @@ $(document).ready(function(){
         ground.scale.setTo(4, 2);
         ceil.scale.setTo(4,2);
 
-        generatePlatforms();
+        generatePlatforms2();
 
         ground.body.immovable = true;
         ceil.body.immovable = true;
@@ -444,6 +444,38 @@ $(document).ready(function(){
             ledge.body.immovable = true;
 
         }
+
+    }
+
+    function generatePlatforms2(){
+        var numberOfPlatforms = 2;
+        var ledge;
+        var positions = [];
+
+
+
+        var position ={};
+        position.x = 0;
+        position.y = 300;
+        positions.push(position);
+            
+
+        var scaleX = 0.2;
+
+        ledge = platforms.create(position.x, position.y, 'ground');
+        ledge.scale.setTo(scaleX, 1);
+        ledge.body.immovable = true;
+        
+        position.x = 400;
+        position.y = 400;
+        positions.push(position);
+            
+
+        var scaleX = 0.6;
+
+        ledge = platforms.create(position.x, position.y, 'ground');
+        ledge.scale.setTo(scaleX, 1);
+        ledge.body.immovable = true;
 
     }
 
