@@ -274,6 +274,7 @@ $(document).ready(function(){
     connection.onmessage = function(data){
         var parsedData = JSON.parse(data.data);
         if(parsedData.isready == 1){            
+            isGameStarted = true;
             ball = balls.create(400,200, 'ball');
             game.physics.enable(balls, Phaser.Physics.ARCADE);
             ball.body.collideWorldBounds = true;
