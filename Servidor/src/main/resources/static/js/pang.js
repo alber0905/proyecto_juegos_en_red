@@ -33,6 +33,7 @@ $(document).ready(function(){
     game.load.image('bullet', 'assets/laser_bullet.png');
     game.load.image('long_bullet', 'assets/superlong_bullet.png');
     game.load.image('ball', 'assets/big_red_ball.png');
+    game.load.image('ball4', 'assets/big_red_ball.png');
     game.load.image('ball3', 'assets/medium_red_ball.png');
     game.load.image('ball2', 'assets/small_red_ball.png');
     game.load.image('ball1', 'assets/small_small_red_ball.png');
@@ -46,6 +47,7 @@ $(document).ready(function(){
     var cursors2 = [];
     var host =0;
     var start;
+    var mostrarbolas = [];
 
     function create(){
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -184,6 +186,14 @@ $(document).ready(function(){
             generatePowerUp(ball);
         }
     }
+    function crearBolas(){
+        balls.callAll('kill');
+        for (var i =0;i<mostrarbolas.length;i++){
+            var newball = balls.create(mostrarbolas[i].x,mostrarbolas[i].y, 'ball'+mostrarbolas[i].size);
+            newball.scale.setTo(scake, scake);
+            //newball.body.gravity.setTo(0, gravity);
+        }
+    }
 
     function update(){
         //la funci�n de abajo hace que acabe la partida pero no sale bien el texto
@@ -245,12 +255,21 @@ $(document).ready(function(){
             player.animations.stop();
             player.frame = 4;
         } 
-
+        var bolaswebsockets = [];
+        for (var i =0; i< balls.length;i++){
+            bolaswebsockets.push({
+                x: balls.children[i].body.center.x,
+                y: balls.children[i].body.center.y,
+                size: balls.children[i].size
+            });
+        }
+        
         var webSocketData =JSON.stringify({
             position:{
                 x: player.position.x,
                 y: player.position.y
             },
+            bolas:bolaswebsockets,
             isShooting: false,
             powerUp: powerup1,
             animation: currentPlayerAnimation
@@ -304,11 +323,11 @@ $(document).ready(function(){
             game.physics.arcade.overlap(balls, player2, playerDeath2);
         }
              
-        if (newball){
-            newball = false;
-            setTimeout(generarBolas,tiempobolas);
-            tiempobolas = tiempobolas - 1000;
-        }
+        //if (newball){
+        //    newball = false;
+        //    setTimeout(generarBolas,tiempobolas);
+        //    tiempobolas = tiempobolas - 1000;
+        //}
     
         player.body.velocity.x = 0;
         if(cursors.left.isDown){
@@ -434,6 +453,7 @@ $(document).ready(function(){
         }
         player2.position.x = parsedData.position.x;
         player2.position.y = parsedData.position.y;
+
         if(player2.position.x >= game.world.width-40){
             player2.position.x = 0;
         } 
@@ -444,6 +464,8 @@ $(document).ready(function(){
         if(parsedData.isShooting){
             fireLongBullet2(parsedData.powerUp1);
         }
+        mostrarbolas = parsedData.bolas;
+        crearBolas();
     }
 
     
@@ -754,6 +776,8 @@ $(document).ready(function(){
     function unablePowerUp2(){
         powerup2 = false;
     }
+
+    
     
 });
 
