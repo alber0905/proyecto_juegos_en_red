@@ -33,6 +33,9 @@ public class PangSocketHandler extends TextWebSocketHandler {
                             sala.replace(participant,id2);
                             sala.put(id2, participant);
                             id1 = participant;
+                            System.out.println("Salas emparejadas: " + session.getId() + ", " + id1);
+                            Thread.sleep(10000);
+                            System.out.println("Message sent: " + ready.toString());
                             session.sendMessage(new TextMessage(ready.toString()));
                             sessions.get(Integer.toString(id1)).sendMessage(new TextMessage(ready.toString()));
                         }

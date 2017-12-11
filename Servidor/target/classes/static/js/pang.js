@@ -2,6 +2,7 @@ $(document).ready(function(){
     var game = new Phaser.Game(600, 600, Phaser.AUTO, 'prueba', { preload: preload, create: create, update: update });
     var connection = new WebSocket('ws://'+ window.location.host +'/sala');
     var isSocketOpen = false;
+    var isGameStarted = false;
     connection.onopen = function(){
         isSocketOpen = true;
     }
@@ -18,7 +19,7 @@ $(document).ready(function(){
     var player2isDead = false;
     var scoreplayer1 = 0;
     var scoreplayer2 = 0;
-    var newball = true;
+    var newball = false;
     var tiempobolas = 20000;
     var powerup1 = false;
     var powerup2 = false;
@@ -136,8 +137,6 @@ $(document).ready(function(){
 
         //BOLAS
         balls = game.add.group();
-        ball = balls.create(400,200, 'ball');
-        game.physics.enable(balls, Phaser.Physics.ARCADE);
 
         //POWER UPS
         powerups = game.add.group();
@@ -145,22 +144,10 @@ $(document).ready(function(){
 
 
         //  This makes the game world bounce-able
-        ball.body.collideWorldBounds = true;
-
-        //  This sets the image bounce energy for the horizontal 
-        //  and vertical vectors (as an x,y point). "1" is 100% energy return
-        ball.body.bounce.setTo(1, 1);
-        //balls.createMultiple(250, 'bullets', 0, false);
-
-        ball.scale.setTo(scake, scake);
-        //ball.body.collideWorldBounds = true;
+        
         player.body.collideWorldBounds = true;
         player2.body.collideWorldBounds = true
-        //ball.body.collide('platforms');
-        ball.body.bounce.setTo(1, 1);
-        ball.body.velocity.setTo(100, 100);
-        ball.body.gravity.setTo(0, gravity);
-        ball.size = 4;
+       
 
         //Score
         scoreText1 = game.add.text(16, 20, 'Score P1: 0', { fontSize: '32px', fill: '#FFFFFF' });
@@ -218,7 +205,6 @@ $(document).ready(function(){
         if (!player2isDead){
             game.physics.arcade.overlap(balls, player2, playerDeath2);
         }
-        
              
         if (newball){
             newball = false;
@@ -259,7 +245,7 @@ $(document).ready(function(){
             animation: currentPlayerAnimation
         });
 
-        if(isSocketOpen){
+        if(isSocketOpen && isGameStarted){
             connection.send(webSocketData);
         }
 
@@ -287,23 +273,44 @@ $(document).ready(function(){
 
     connection.onmessage = function(data){
         var parsedData = JSON.parse(data.data);
-        if(parsedData.animation == 'stop'){
-            player2.animations.stop();
+        if(parsedData.isready == 1){            
+            ball = balls.create(400,200, 'ball');
+            game.physics.enable(balls, Phaser.Physics.ARCADE);
+            ball.body.collideWorldBounds = true;
+    
+            //  This sets the image bounce energy for the horizontal 
+            //  and vertical vectors (as an x,y point). "1" is 100% energy return
+            ball.body.bounce.setTo(1, 1);
+            //balls.createMultiple(250, 'bullets', 0, false);
+    
+            ball.scale.setTo(scake, scake);
+            //ball.body.collideWorldBounds = true;
+
+             //ball.body.collide('platforms');
+            ball.body.bounce.setTo(1, 1);
+            ball.body.velocity.setTo(100, 100);
+            ball.body.gravity.setTo(0, gravity);
+            ball.size = 4;
         }
         else{
-            player2.animations.play(parsedData.animation);
-        }
-        player2.position.x = parsedData.position.x;
-        player2.position.y = parsedData.position.y;
-        if(player2.position.x >= game.world.width-40){
-            player2.position.x = 0;
-        } 
-        else if(player2.position.x == 0 ){
-            player2.position.x = game.world.width;
-        }
+            if(parsedData.animation == 'stop'){
+                player2.animations.stop();
+            }
+            else{
+                player2.animations.play(parsedData.animation);
+            }
+            player2.position.x = parsedData.position.x;
+            player2.position.y = parsedData.position.y;
+            if(player2.position.x >= game.world.width-40){
+                player2.position.x = 0;
+            } 
+            else if(player2.position.x == 0 ){
+                player2.position.x = game.world.width;
+            }
 
-        if(parsedData.isShooting){
-            fireLongBullet2(parsedData.powerUp1);
+            if(parsedData.isShooting){
+                fireLongBullet2(parsedData.powerUp1);
+            }
         }
 
     }
