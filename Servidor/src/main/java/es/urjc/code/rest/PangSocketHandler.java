@@ -27,6 +27,8 @@ public class PangSocketHandler extends TextWebSocketHandler {
                 int id1=-1;
                 ObjectNode ready = mapper.createObjectNode();
                 ready.put("isready", "1");
+                ObjectNode host = mapper.createObjectNode();
+                host.put("ishost", "1");
                 
                 for(int participant : sala.keySet()) {
 			if( id1==-1 && sala.get(participant) ==0){
@@ -42,6 +44,7 @@ public class PangSocketHandler extends TextWebSocketHandler {
 		}
                 if(id1==-1){
                     sala.put(id2,0);
+                    session.sendMessage(new TextMessage(host.toString()));
                 }
 	}
 	

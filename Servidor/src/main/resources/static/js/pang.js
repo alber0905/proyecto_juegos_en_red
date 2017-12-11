@@ -44,7 +44,8 @@ $(document).ready(function(){
     var scake = 3;
     var gravity = 600;
     var cursors2 = [];
-
+    var host =0;
+    var start;
 
     function create(){
         game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -185,6 +186,103 @@ $(document).ready(function(){
     }
 
     function update(){
+        //la funci�n de abajo hace que acabe la partida pero no sale bien el texto
+        if (host==1){
+            updateHost();
+        }
+        else{
+            updateClient();
+        }       
+    }
+
+    function updateHost(){
+        //la función de abajo hace que acabe la partida pero no sale bien el texto
+        gameOver();
+        var hitPlatform = game.physics.arcade.collide(player, platforms);
+        var hitPlatform2 = game.physics.arcade.collide(player2, platforms);
+        game.physics.arcade.collide(balls, platforms);
+        game.physics.arcade.collide(powerups, platforms);
+        game.physics.arcade.collide(bullets, platforms, killLongBullet, null, this);
+        game.physics.arcade.overlap(balls, bullets, collisionBall, null, this);
+        game.physics.arcade.collide(bullets2, platforms, killLongBullet2, null, this);
+        game.physics.arcade.overlap(balls, bullets2, collisionBall2, null, this);
+        game.physics.arcade.overlap(powerups, player, getPowerUp,null,this);
+        game.physics.arcade.overlap(powerups, player2, getPowerUp2,null,this);
+
+        if (!player1isDead){
+            game.physics.arcade.overlap(balls, player, playerDeath);    
+        }
+
+        if (!player2isDead){
+            game.physics.arcade.overlap(balls, player2, playerDeath2);
+        }
+             
+        if (newball){
+            newball = false;
+            setTimeout(generarBolas,tiempobolas);
+            tiempobolas = tiempobolas - 1000;
+        }
+    
+        player.body.velocity.x = 0;
+        if(cursors.left.isDown){
+            player.body.velocity.x = -150;
+            player.animations.play('moveleft');
+            currentPlayerAnimation = 'moveleft';
+            if(player.position.x == 0 ){
+                player.position.x = game.world.width;
+            }
+        }
+        else if(cursors.right.isDown){
+            player.body.velocity.x = 150;
+            player.animations.play('moveright');
+            currentPlayerAnimation = 'moveright';
+            if(player.position.x >= game.world.width-40){
+                player.position.x = 0;
+            }   
+        }
+        
+        else{
+            player.animations.stop();
+            player.frame = 4;
+        } 
+
+        var webSocketData =JSON.stringify({
+            position:{
+                x: player.position.x,
+                y: player.position.y
+            },
+            isShooting: false,
+            powerUp: powerup1,
+            animation: currentPlayerAnimation
+        });
+
+        if(isSocketOpen && isGameStarted){
+            connection.send(webSocketData);
+        }
+
+        player2.body.velocity.x = 0;
+        if(cursors2[0].isDown){
+            player2.body.velocity.x = -150;
+            player2.animations.play('moveleft');
+            if(player2.position.x == 0 ){
+                player2.position.x = game.world.width;
+            }
+        }
+        else if(cursors2[1].isDown){
+            player2.body.velocity.x = 150;
+            player2.animations.play('moveright');
+            if(player2.position.x >= game.world.width-40){
+                player2.position.x = 0;
+            }   
+        }
+        
+        else{
+            player2.animations.stop();
+            player2.frame = 4;
+        }
+    }
+
+    function updateClient(){
         //la función de abajo hace que acabe la partida pero no sale bien el texto
         gameOver();
         var hitPlatform = game.physics.arcade.collide(player, platforms);
@@ -273,7 +371,10 @@ $(document).ready(function(){
 
     connection.onmessage = function(data){
         var parsedData = JSON.parse(data.data);
-        if(parsedData.isready == 1){            
+        if(parsedData.ishost==1){
+            host = 1;
+        }
+        if(parsedData.isready == 1 && host ==1){            
             isGameStarted = true;
             ball = balls.create(400,200, 'ball');
             game.physics.enable(balls, Phaser.Physics.ARCADE);
@@ -293,30 +394,59 @@ $(document).ready(function(){
             ball.body.gravity.setTo(0, gravity);
             ball.size = 4;
         }
+        else if (host==true){
+            messageHost(parsedData);
+        }
         else{
-            if(parsedData.animation == 'stop'){
-                player2.animations.stop();
-            }
-            else{
-                player2.animations.play(parsedData.animation);
-            }
-            player2.position.x = parsedData.position.x;
-            player2.position.y = parsedData.position.y;
-            if(player2.position.x >= game.world.width-40){
-                player2.position.x = 0;
-            } 
-            else if(player2.position.x == 0 ){
-                player2.position.x = game.world.width;
-            }
-
-            if(parsedData.isShooting){
-                fireLongBullet2(parsedData.powerUp1);
-            }
+            messageClient(parsedData);
+        
         }
 
     }
 
+    function messageHost(parsedData){
+        if(parsedData.animation == 'stop'){
+            player2.animations.stop();
+        }
+        else{
+            player2.animations.play(parsedData.animation);
+        }
+        player2.position.x = parsedData.position.x;
+        player2.position.y = parsedData.position.y;
+        if(player2.position.x >= game.world.width-40){
+            player2.position.x = 0;
+        } 
+        else if(player2.position.x == 0 ){
+            player2.position.x = game.world.width;
+        }
 
+        if(parsedData.isShooting){
+            fireLongBullet2(parsedData.powerUp1);
+        }
+    }
+
+    function messageClient(parsedData){
+        if(parsedData.animation == 'stop'){
+            player2.animations.stop();
+        }
+        else{
+            player2.animations.play(parsedData.animation);
+        }
+        player2.position.x = parsedData.position.x;
+        player2.position.y = parsedData.position.y;
+        if(player2.position.x >= game.world.width-40){
+            player2.position.x = 0;
+        } 
+        else if(player2.position.x == 0 ){
+            player2.position.x = game.world.width;
+        }
+
+        if(parsedData.isShooting){
+            fireLongBullet2(parsedData.powerUp1);
+        }
+    }
+
+    
 
     function fireBullet(){
         var bullet = bullets.getFirstExists(false);
