@@ -262,6 +262,11 @@ $(document).ready(function(){
                     y: balls.children[i].body.center.y,
                     size: balls.children[i].size
                 });
+            bolaswebsockets.push({
+                x: balls.children[i].body.center.x,
+                y: balls.children[i].body.center.y,
+                size: balls.children[i].size
+            });
         }
         
         var webSocketData =JSON.stringify({
@@ -541,7 +546,7 @@ $(document).ready(function(){
         scoreplayer1 += 10;
         scoreText1.text = 'Score p1: ' + scoreplayer1;
         dividirBolas(ball1);
-        ball1.kill();
+        ball1.destroy();
     }
     function collisionBall2(ball1, bullet){
         bullet.kill();
@@ -549,7 +554,7 @@ $(document).ready(function(){
         scoreplayer2 += 10;
         scoreText2.text = 'Score p2: ' + scoreplayer2;
         dividirBolas(ball1);
-        ball1.kill();
+        ball1.destroy();
     }
 
     function killLongBullet(bullet, platform){
