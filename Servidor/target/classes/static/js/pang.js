@@ -269,11 +269,6 @@ $(document).ready(function(){
                     y: balls.children[i].body.center.y,
                     size: balls.children[i].size
                 });
-            bolaswebsockets.push({
-                x: balls.children[i].body.center.x,
-                y: balls.children[i].body.center.y,
-                size: balls.children[i].size
-            });
         }
         
         var webSocketData =JSON.stringify({
@@ -336,12 +331,6 @@ $(document).ready(function(){
         if (!player2isDead){
             game.physics.arcade.overlap(balls, player2, playerDeath2);
         }
-             
-        //if (newball){
-        //    newball = false;
-        //    setTimeout(generarBolas,tiempobolas);
-        //    tiempobolas = tiempobolas - 1000;
-        //}
     
         player.body.velocity.x = 0;
         if(cursors.left.isDown){
@@ -402,33 +391,37 @@ $(document).ready(function(){
         }
     }
 
+    var bolasGeneradas = false;
+
+
     connection.onmessage = function(data){
         var parsedData = JSON.parse(data.data);
         if(parsedData.ishost==1){
             host = 1;
         }
-        else if(parsedData.isready == 1){   
-            if(host == 1){
-                generarBolas();
-            }        
+        else if(parsedData.isready == 1){               
             isGameStarted = true;
-            ball = balls.create(400,200, 'ball');
-            game.physics.enable(balls, Phaser.Physics.ARCADE);
-            ball.body.collideWorldBounds = true;
+            if(host == 1 && !bolasGeneradas){
+                generarBolas();
+                bolasGeneradas = true;
+            }        
+            // ball = balls.create(400,200, 'ball');
+            // game.physics.enable(balls, Phaser.Physics.ARCADE);
+            // ball.body.collideWorldBounds = true;
     
-            //  This sets the image bounce energy for the horizontal 
-            //  and vertical vectors (as an x,y point). "1" is 100% energy return
-            ball.body.bounce.setTo(1, 1);
-            //balls.createMultiple(250, 'bullets', 0, false);
+            // //  This sets the image bounce energy for the horizontal 
+            // //  and vertical vectors (as an x,y point). "1" is 100% energy return
+            // ball.body.bounce.setTo(1, 1);
+            // //balls.createMultiple(250, 'bullets', 0, false);
     
-            ball.scale.setTo(scake, scake);
-            //ball.body.collideWorldBounds = true;
+            // ball.scale.setTo(scake, scake);
+            // //ball.body.collideWorldBounds = true;
 
-             //ball.body.collide('platforms');
-            ball.body.bounce.setTo(1, 1);
-            ball.body.velocity.setTo(100, 100);
-            ball.body.gravity.setTo(0, gravity);
-            ball.size = 4;
+            //  //ball.body.collide('platforms');
+            // ball.body.bounce.setTo(1, 1);
+            // ball.body.velocity.setTo(100, 100);
+            // ball.body.gravity.setTo(0, gravity);
+            // ball.size = 4;
         }
         else if (host==1){
             messageHost(parsedData);
@@ -704,7 +697,7 @@ $(document).ready(function(){
             animation: currentPlayerAnimation
         });
         connection.send(webSocketData);
-        if (livesplayer1 != 0){
+        if (livesplayer1 > 0){
         setTimeout(playerReset, 1500);
         setTimeout(changeplayer1death, 3000);
         } 
@@ -727,7 +720,7 @@ $(document).ready(function(){
             animation: currentPlayerAnimation
         });
         connection.send(webSocketData);
-        if (livesplayer2 != 0){
+        if (livesplayer2 > 0){
         setTimeout(playerReset2, 1500);
         setTimeout(changeplayer2death, 3000);
         } 
