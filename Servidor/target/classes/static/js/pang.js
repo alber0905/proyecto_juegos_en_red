@@ -398,6 +398,9 @@ $(document).ready(function(){
         if(parsedData.ishost==1){
             host = 1;
         }
+        if(parsedData.isready == 1){
+            isGameStarted = true;
+        }
         if(parsedData.isready == 1 && host ==1){            
             isGameStarted = true;
             ball = balls.create(400,200, 'ball');
