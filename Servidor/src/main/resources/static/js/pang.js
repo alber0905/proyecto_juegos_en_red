@@ -187,9 +187,9 @@ $(document).ready(function(){
         }
     }
     function crearBolas(bolas){
-        balls.callAll('kill');
+        balls.callAll('destroy');
         for (var i =0;i<bolas.length;i++){
-            var newball = balls.create(bolas[i].x,bolas[i].y, 'ball'+bolas[i].size);
+            var newball = balls.create(bolas[i].x-bolas[i].size*7,bolas[i].y-bolas[i].size*7, 'ball'+bolas[i].size);
             newball.scale.setTo(scake, scake);
             //newball.body.gravity.setTo(0, gravity);
         }
