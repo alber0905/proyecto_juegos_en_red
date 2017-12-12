@@ -186,10 +186,10 @@ $(document).ready(function(){
             generatePowerUp(ball);
         }
     }
-    function crearBolas(){
+    function crearBolas(bolas){
         balls.callAll('kill');
-        for (var i =0;i<mostrarbolas.length;i++){
-            var newball = balls.create(mostrarbolas[i].x,mostrarbolas[i].y, 'ball'+mostrarbolas[i].size);
+        for (var i =0;i<bolas.length;i++){
+            var newball = balls.create(bolas[i].x,bolas[i].y, 'ball'+bolas[i].size);
             newball.scale.setTo(scake, scake);
             //newball.body.gravity.setTo(0, gravity);
         }
@@ -257,11 +257,11 @@ $(document).ready(function(){
         } 
         var bolaswebsockets = [];
         for (var i =0; i< balls.length;i++){
-            bolaswebsockets.push({
-                x: balls.children[i].body.center.x,
-                y: balls.children[i].body.center.y,
-                size: balls.children[i].size
-            });
+                bolaswebsockets.push({
+                    x: balls.children[i].body.center.x,
+                    y: balls.children[i].body.center.y,
+                    size: balls.children[i].size
+                });
         }
         
         var webSocketData =JSON.stringify({
@@ -464,8 +464,10 @@ $(document).ready(function(){
         if(parsedData.isShooting){
             fireLongBullet2(parsedData.powerUp1);
         }
-        mostrarbolas = parsedData.bolas;
-        crearBolas();
+        if(parsedData.bolas){
+            crearBolas(parsedData.bolas);
+        }
+        
     }
 
     
