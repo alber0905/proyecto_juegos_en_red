@@ -435,7 +435,7 @@ $(document).ready(function(){
 
     function messageHost(parsedData){
         if(parsedData.animation == 'stop'){
-            player2.animations.stop();
+           // player2.animations.stop();
         }
         else{
             player2.animations.play(parsedData.animation);
@@ -460,7 +460,7 @@ $(document).ready(function(){
 
     function messageClient(parsedData){
         if(parsedData.animation == 'stop'){
-            player2.animations.stop();
+            //player2.animations.stop();
         }
         else{
             player2.animations.play(parsedData.animation);
