@@ -188,7 +188,7 @@ $(document).ready(function(){
         }
     }
     function crearBolas(bolas){
-        balls.callAll('destroy');
+        balls.callAll('kill');
         for (var i =0;i<bolas.length;i++){
             var newball = balls.create(bolas[i].x-bolas[i].size*7,bolas[i].y-bolas[i].size*7, 'ball'+bolas[i].size);
             newball.scale.setTo(scake, scake);
@@ -287,27 +287,6 @@ $(document).ready(function(){
         if(isSocketOpen && isGameStarted){
             connection.send(webSocketData);
         }
-
-        player2.body.velocity.x = 0;
-        if(cursors2[0].isDown){
-            player2.body.velocity.x = -150;
-            player2.animations.play('moveleft');
-            if(player2.position.x == 0 ){
-                player2.position.x = game.world.width;
-            }
-        }
-        else if(cursors2[1].isDown){
-            player2.body.velocity.x = 150;
-            player2.animations.play('moveright');
-            if(player2.position.x >= game.world.width-40){
-                player2.position.x = 0;
-            }   
-        }
-        
-        else{
-            player2.animations.stop();
-            player2.frame = 4;
-        }
     }
 
     function updateClient(){
@@ -367,27 +346,6 @@ $(document).ready(function(){
 
         if(isSocketOpen && isGameStarted){
             connection.send(webSocketData);
-        }
-
-        player2.body.velocity.x = 0;
-        if(cursors2[0].isDown){
-            player2.body.velocity.x = -150;
-            player2.animations.play('moveleft');
-            if(player2.position.x == 0 ){
-                player2.position.x = game.world.width;
-            }
-        }
-        else if(cursors2[1].isDown){
-            player2.body.velocity.x = 150;
-            player2.animations.play('moveright');
-            if(player2.position.x >= game.world.width-40){
-                player2.position.x = 0;
-            }   
-        }
-        
-        else{
-            player2.animations.stop();
-            player2.frame = 4;
         }
     }
 
