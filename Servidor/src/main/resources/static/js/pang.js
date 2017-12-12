@@ -450,7 +450,11 @@ $(document).ready(function(){
         }
 
         if(parsedData.isShooting){
-            fireLongBullet2(parsedData.powerUp1);
+            fireLongBullet2();
+        }
+
+        if(parsedData.enablePowerUp){
+            enablePowerUp2();
         }
     }
 
@@ -472,7 +476,7 @@ $(document).ready(function(){
         }
 
         if(parsedData.isShooting){
-            fireLongBullet2(parsedData.powerUp1);
+            fireLongBullet2();
         }
         if(parsedData.bolas){
             crearBolas(parsedData.bolas);
@@ -487,6 +491,9 @@ $(document).ready(function(){
             scoreplayer2 = parsedData.score1;
             scoreText2.text = 'Score p2: ' + scoreplayer2;
 
+        }
+        if(parsedData.enablePowerUp){
+            enablePowerUp2();
         }
 
         if(parsedData.playerDeath){
@@ -550,8 +557,8 @@ $(document).ready(function(){
         });
         connection.send(webSocketData);
     }
-    function fireLongBullet2(powerUpSocket){
-        if(powerUpSocket){
+    function fireLongBullet2(){
+        if(powerup2){
             if(!player2isDead){
                 fireBullet2();
             }
@@ -580,7 +587,8 @@ $(document).ready(function(){
         scoreplayer2 += 10;
         scoreText2.text = 'Score p2: ' + scoreplayer2;
         dividirBolas(ball1);
-        ball1.destroy();
+        ball1.kill();
+        ball1.destroyNext = true;
     }
 
     function killLongBullet(bullet, platform){
@@ -843,12 +851,31 @@ $(document).ready(function(){
         powerup1 = true;
         pow.kill();
         setTimeout(unablePowerUp1,10000);
+        var webSocketData =JSON.stringify({
+            position:{
+                x: player.position.x,
+                y: player.position.y
+            },
+            isShooting: false,
+            powerUp: false,
+            enablePowerUp: true,
+            animation: currentPlayerAnimation
+        });
+        connection.send(webSocketData);
+
     }
+
     function getPowerUp2(p,pow2){
-        powerup2 = true;
         pow2.kill();
-        setTimeout(unablePowerUp2,10000);
     }
+
+    function enablePowerUp2(){
+        powerup2 = true;
+        setTimeout(unablePowerUp2,10000);
+
+    }
+
+
     function unablePowerUp1(){
         powerup1 = false;
     }
