@@ -159,6 +159,7 @@ $(document).ready(function(){
         livesText = game.add.text(0, 550, 'Lives P1: ' + livesplayer1, { fontSize: '32px', fill: '#FFFFFF' });
         livesText2 = game.add.text(400, 550, 'Lives P2: ' + livesplayer2, { fontSize: '32px', fill: '#FFFFFF' });
         
+        
     }
 
     function dividirBolas(ball){
@@ -233,11 +234,11 @@ $(document).ready(function(){
             game.physics.arcade.overlap(balls, player2, playerDeath2);
         }
              
-        if (newball){
-            newball = false;
-            setTimeout(generarBolas,tiempobolas);
-            tiempobolas = tiempobolas - 1000;
-        }
+        // if (newball){
+        //     newball = false;
+        //     setTimeout(generarBolas,tiempobolas);
+        //     tiempobolas = tiempobolas - 1000;
+        // }
     
         player.body.velocity.x = 0;
         if(cursors.left.isDown){
@@ -406,8 +407,10 @@ $(document).ready(function(){
         if(parsedData.ishost==1){
             host = 1;
         }
-        else if(parsedData.isready == 1){           
-            isGameStarted = true; 
+        else if(parsedData.isready == 1){   
+            if(host == 1){
+                generarBolas();
+            }        
             isGameStarted = true;
             ball = balls.create(400,200, 'ball');
             game.physics.enable(balls, Phaser.Physics.ARCADE);
@@ -760,6 +763,7 @@ $(document).ready(function(){
             //showGameOverText();
             //setTimeout(redireccionarAMenu, 3000);
             if(!sent){
+                isGameStarted = false;
                 game.input.keyboard.removeKey(Phaser.Keyboard.A);
                 game.input.keyboard.removeKey(Phaser.Keyboard.D);
                 game.input.keyboard.removeKey(Phaser.Keyboard.W);
@@ -805,7 +809,9 @@ $(document).ready(function(){
         newball3.body.velocity.setTo(100, 100);
         newball3.body.gravity.setTo(0, gravity);
         newball3.size = 4;
-        newball = true;
+        if(isGameStarted){
+            setTimeout(generarBolas, 20000);
+        }
     }
     
     function generatePowerUp(ball){
