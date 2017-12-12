@@ -206,6 +206,12 @@ $(document).ready(function(){
     }
 
     function updateHost(){
+
+        for (var i =0; i< balls.length;i++){
+            if(balls.children[i].destroyNext == true){
+                balls.children[i].destroy();
+            }
+        }
         //la función de abajo hace que acabe la partida pero no sale bien el texto
         gameOver();
         var hitPlatform = game.physics.arcade.collide(player, platforms);
@@ -276,8 +282,10 @@ $(document).ready(function(){
             },
             bolas:bolaswebsockets,
             isShooting: false,
-            powerUp: powerup1,
-            animation: currentPlayerAnimation
+            powerUp: false,
+            animation: currentPlayerAnimation,
+            score1: scoreplayer1,
+            score2: scoreplayer2
         });
 
         if(isSocketOpen && isGameStarted){
@@ -363,7 +371,7 @@ $(document).ready(function(){
                 y: player.position.y
             },
             isShooting: false,
-            powerUp: powerup1,
+            powerUp: false,
             animation: currentPlayerAnimation
         });
 
@@ -398,10 +406,8 @@ $(document).ready(function(){
         if(parsedData.ishost==1){
             host = 1;
         }
-        if(parsedData.isready == 1){
-            isGameStarted = true;
-        }
-        if(parsedData.isready == 1 && host ==1){            
+        else if(parsedData.isready == 1){           
+            isGameStarted = true; 
             isGameStarted = true;
             ball = balls.create(400,200, 'ball');
             game.physics.enable(balls, Phaser.Physics.ARCADE);
@@ -421,7 +427,7 @@ $(document).ready(function(){
             ball.body.gravity.setTo(0, gravity);
             ball.size = 4;
         }
-        else if (host==true){
+        else if (host==1){
             messageHost(parsedData);
         }
         else{
@@ -475,6 +481,26 @@ $(document).ready(function(){
         if(parsedData.bolas){
             crearBolas(parsedData.bolas);
         }
+        if(parsedData.powerUp){
+            generateClientPowerUp(parsedData.powerUpPosition);
+        }
+        if(parsedData.score1){
+            scoreplayer1 = parsedData.score2;
+            scoreText1.text = 'Score p2: ' + scoreplayer1;
+
+            scoreplayer2 = parsedData.score1;
+            scoreText2.text = 'Score p2: ' + scoreplayer2;
+
+        }
+
+        if(parsedData.playerDeath){
+            if(parsedData.playerDeath == 1){
+                playerDeath2();
+            }
+            else if(parsedData.playerDeath == 2){
+                playerDeath();
+            }
+        }
         
     }
 
@@ -523,7 +549,7 @@ $(document).ready(function(){
                 y: player.position.y
             },
             isShooting: true,
-            powerUp: powerup1,
+            powerUp: false,
             animation: currentPlayerAnimation
         });
         connection.send(webSocketData);
@@ -549,7 +575,8 @@ $(document).ready(function(){
         scoreplayer1 += 10;
         scoreText1.text = 'Score p1: ' + scoreplayer1;
         dividirBolas(ball1);
-        ball1.destroy();
+        ball1.kill();
+        ball1.destroyNext = true;
     }
     function collisionBall2(ball1, bullet){
         bullet.kill();
@@ -663,6 +690,17 @@ $(document).ready(function(){
         firing = true;
         player.kill();
         player1isDead = true;
+        var webSocketData =JSON.stringify({
+            position:{
+                x: player.position.x,
+                y: player.position.y
+            },
+            isShooting: false,
+            powerUp: false,
+            playerDeath:1,
+            animation: currentPlayerAnimation
+        });
+        connection.send(webSocketData);
         if (livesplayer1 != 0){
         setTimeout(playerReset, 1500);
         setTimeout(changeplayer1death, 3000);
@@ -675,6 +713,17 @@ $(document).ready(function(){
         firing2 = true;
         player2.kill();
         player2isDead = true;
+        var webSocketData =JSON.stringify({
+            position:{
+                x: player.position.x,
+                y: player.position.y
+            },
+            isShooting: false,
+            powerUp: false,
+            playerDeath:2,
+            animation: currentPlayerAnimation
+        });
+        connection.send(webSocketData);
         if (livesplayer2 != 0){
         setTimeout(playerReset2, 1500);
         setTimeout(changeplayer2death, 3000);
@@ -766,8 +815,29 @@ $(document).ready(function(){
             game.physics.arcade.enable(powerup);
             powerup.body.gravity.y = 100;
             powerup.body.collideWorldBounds = true;
+
+            var webSocketData =JSON.stringify({
+                position:{
+                    x: player.position.x,
+                    y: player.position.y
+                },
+                isShooting: false,
+                powerUp: true,
+                powerUpPosition: ball.position,
+                animation: currentPlayerAnimation
+            });
+            connection.send(webSocketData);
         }
     }
+
+
+    function generateClientPowerUp(position){
+        var powerup = powerups.create(position.x, position.y, 'star');
+        game.physics.arcade.enable(powerup);
+        powerup.body.gravity.y = 100;
+        powerup.body.collideWorldBounds = true;
+    }
+
 
     //
     function getPowerUp(p,pow){
