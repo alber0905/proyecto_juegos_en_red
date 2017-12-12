@@ -1,4 +1,5 @@
 ﻿# proyecto_juegos_en_red
+ 
 
 ## Nombre del juego:
 	PANG
@@ -13,6 +14,11 @@
 	Nuestra idea es implementar el juego como un multijugador con puntuaciones, vidas, potenciadores y modificadores de armas.
 
 	Video referencia: https://www.youtube.com/watch?v=rlsx9yrr2-w
+	
+ ## Demostración:
+ https://www.youtube.com/watch?v=Zh8PMSjurZQ
+ 
+ *El segundo jugador se ha unido mediante un enlace creado con el programa gratuito ngrok, y su pantalla no ha podido ser grabada
 
 ## Integrantes del grupo:
     - Alberto Blanco Barrios, a.blancoba@alumnos.urjc.es, github: alber0905
@@ -51,18 +57,26 @@ Además de estos elementos, existen dos tipos de balas:
 ![alt text](/pang_online/screenshots/partida.png)
 
 ## Pantalla puntuaciones
-Aquí es donde se implementará la leaderboard cuando se implemente el servidor. De momento los datos están grabados
-en el propio HTML.
 
+Aquí aparece la leaderboard de puntuaciones, que se guardan al final de la partida. La tabla de puntuaciones se actualiza
+teniendo en cuenta dichas puntuaciones, por medio de API REST.
 ![alt text](/pang_online/screenshots/puntuacion.png)
 
-## Diagrama de Flujo
+## Documentación del protocolo utilizado sobre websockets
 
+El jugador establece una conexión al introducirse en alguna de las salas. Al elegir una sala, la partida comienza una vez los dos jugadores se encuentren dentro de la misma. El primer jugador que entra actúa como host de la sala, y una vez que entra,
+se generan las plataformas, que serán las mismas para el segundo jugador que entre a la sala. Durante la partida,
+mediante los websockets abiertos se envía información en tiempo real sobre posición de los jugadores, si se ha disparado o no, si alguno de los jugadores tiene powerups que cambie los disparos, la generación de bolas y las colisiones.
+
+
+## Diagrama de Flujo
+Para la última parte de la práctica, no se ha modificado el diagrama de flujo 
 ![alt text](/pang_online/screenshots/Diagrama_de_flujo.png)
 
 ## Diagrama de clases del servidor
 
 En verde está el @Controller, en azul el @service y en rojo el archivo js que utiliza la API REST.
+Se ha añadido la clase que gestiona los sockets.
 
 ![alt text](/pang_online/screenshots/Diagrama_de_clases_server.PNG)
 
@@ -70,6 +84,6 @@ En verde está el @Controller, en azul el @service y en rojo el archivo js que u
 
 Instalar Java Se
 
-Ejecutar el servidor en Servidor/target/Server-0.0.1-SNAPSHOT.jar
+Ejecutar el servidor en Servidor/target/pang_online_server.jar
 
 Para entrar en la página, escribir la url localhost:8090
