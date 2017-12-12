@@ -188,6 +188,7 @@ $(document).ready(function(){
     }
     function crearBolas(){
         balls.callAll('kill');
+        balls.removeAll(true)
         for (var i =0;i<mostrarbolas.length;i++){
             var newball = balls.create(mostrarbolas[i].x,mostrarbolas[i].y, 'ball'+mostrarbolas[i].size);
             newball.scale.setTo(scake, scake);
@@ -539,7 +540,7 @@ $(document).ready(function(){
         scoreplayer1 += 10;
         scoreText1.text = 'Score p1: ' + scoreplayer1;
         dividirBolas(ball1);
-        ball1.kill();
+        ball1.destroy();
     }
     function collisionBall2(ball1, bullet){
         bullet.kill();
@@ -547,7 +548,7 @@ $(document).ready(function(){
         scoreplayer2 += 10;
         scoreText2.text = 'Score p2: ' + scoreplayer2;
         dividirBolas(ball1);
-        ball1.kill();
+        ball1.destroy();
     }
 
     function killLongBullet(bullet, platform){
