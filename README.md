@@ -68,6 +68,17 @@ El jugador establece una conexión al introducirse en alguna de las salas. Al el
 se generan las plataformas, que serán las mismas para el segundo jugador que entre a la sala. Durante la partida,
 mediante los websockets abiertos se envía información en tiempo real sobre posición de los jugadores, si se ha disparado o no, si alguno de los jugadores tiene powerups que cambie los disparos, la generación de bolas y las colisiones.
 
+### Tipos de mensajes
+En el juego hay tres tipos de mensajes que se gestionan mediante websockets:
+- El primer tipo de mensaje es el que se envía cuando se conecta un jugador impar, que será host, y por tanto el servidor le manda un mensaje indicándole que es el host.
+- El segundo tipo de mensaje se envía cuando dos jugadores se emparejan, y se les envía un json indicándoles que puede comenzar la partida. En este momento el servidor espera unos segundos para asegurarse de que los dos jugadores han cargado la página correctamente.
+- El tercer tipo de mensaje es el que se manda durante el juego, y contiene datos como la posición del jugador, de las bolas, etc. El servidor recibe un mensaje de un jugador y se lo manda a su pareja de forma íntegra. Estos mensajes se llaman en varios sitios.
+	- En el update: Mandando cada frame la posición de las bolas, de los jugadores y si un jugador ha disparado.
+	- En eventos específicos, como cuando un jugador dispara, muere o coge un powerUp. En estos eventos solo se manda la posición del jugador y lo que ha sucedido en el evento particular.
+
+### Interpretación de los mensajes en javascript
+El cliente puede ser host o cliente. Dependiendo de si es uno u otro se ejecutará un Update distinto y se mandarán mensajes distintos. Por ejemplo: el jugador host manda la posición de las bolas en cada fotograma y el jugador cliente no lo hace. El jugador cliente interpreta estas posiciones cada vez que las recibe, y el jugador host no lo hace.
+
 
 ## Diagrama de Flujo
 Para la última parte de la práctica, no se ha modificado el diagrama de flujo 
