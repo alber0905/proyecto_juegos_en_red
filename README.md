@@ -16,9 +16,8 @@
 	Video referencia: https://www.youtube.com/watch?v=rlsx9yrr2-w
 	
  ## Demostración:
- https://www.youtube.com/watch?v=Zh8PMSjurZQ
+ https://youtu.be/RR80dqBkrA0
  
- *El segundo jugador se ha unido mediante un enlace creado con el programa gratuito ngrok, y su pantalla no ha podido ser grabada
 
 ## Integrantes del grupo:
     - Alberto Blanco Barrios, a.blancoba@alumnos.urjc.es, github: alber0905
